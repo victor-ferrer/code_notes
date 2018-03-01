@@ -1,4 +1,6 @@
 site_name: Victor Code Notes
+docs_dir: pages
+site_dir: docs
 pages:
 - Home: index.md
 - Code Notes:
