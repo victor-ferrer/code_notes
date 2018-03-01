@@ -1,1 +1,0 @@
-Victor Code Notes
