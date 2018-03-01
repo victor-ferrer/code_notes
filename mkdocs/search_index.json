@@ -1,0 +1,109 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "Welcome to Victor's Code Notes\n\n\nThis is a small collection of code notes that I'm gathering after finally ditching OneNote.\n\n\nAbout the autor\n\n\nVictor Ferrer is a Software Engineer, currently working at Ericsson.\n\n\nContact\n\n\n\n\nBlog\n\n\nStack Overflow profile\n\n\nLinkedin Profile",
+            "title": "Home"
+        },
+        {
+            "location": "/#welcome-to-victors-code-notes",
+            "text": "This is a small collection of code notes that I'm gathering after finally ditching OneNote.  About the autor  Victor Ferrer is a Software Engineer, currently working at Ericsson.  Contact   Blog  Stack Overflow profile  Linkedin Profile",
+            "title": "Welcome to Victor's Code Notes"
+        },
+        {
+            "location": "/bash/",
+            "text": "Iterate over files and search for a pattern\n\n\nScript\n\n\n#!/bin/bash\n\nfor filename in ./*.xml; do\n    echo Checking $filename\n    aux1=`grep -oE ' Name=\\\"(.*)\\\"' < $filename | cut -f 2 -d '\"'`\n    cp $filename $aux1.xml\ndone\n\necho Done!\n\n\n\n\nRemarks\n\n\n\n\ngrep -oE\n searches ONLY for a pattern\n\n\ngrep -oE < $fileName\n is more efficient than \ncat $filename | grep -oE\n\n\nSee \nthis StackOverflow question",
+            "title": "Bash"
+        },
+        {
+            "location": "/bash/#iterate-over-files-and-search-for-a-pattern",
+            "text": "Script  #!/bin/bash\n\nfor filename in ./*.xml; do\n    echo Checking $filename\n    aux1=`grep -oE ' Name=\\\"(.*)\\\"' < $filename | cut -f 2 -d '\"'`\n    cp $filename $aux1.xml\ndone\n\necho Done!  Remarks   grep -oE  searches ONLY for a pattern  grep -oE < $fileName  is more efficient than  cat $filename | grep -oE  See  this StackOverflow question",
+            "title": "Iterate over files and search for a pattern"
+        },
+        {
+            "location": "/docker/",
+            "text": "Cloudera Quickstart docker container\n\n\nPull the image\n\n\n# Pulls the image (4Gb!)\ndocker pull cloudera/quickstart\n\n\n\n\nSet a variable with all needed ports to be opened\n\n\n# Ports to be opened (most commonly used)\n# - 8888      expose hue interface\n# - 7180      expose cloudera manager\n# - 80        expose cloudera examples\n# - 8983      expose port of Web UI solr search \n# - 50070     expose name node web ui interface\n# - 50090     expose secondary name node\n# - 50075     expose data  node\n# - 50030     expose job tracker\n# - 50060     expose task trackers\n# - 60010     expose hbase master status\n# - 60030     expose hbase region server\n# - 9095      expose hbase thrift server\n# - 8020      expose hdfs port\n# - 8088      expose job tracker port\n# - 4040      expose port of spark\n# - 18088     expose history server web interface\n# ...\nports=\"-p 8888:8888 -p 7180:7180 -p 80:80 -p 4040:4040 -p 4041:4041 \\\n-p 4042:4042  -p 4043:4043 -p 9092:9092 -p 2181:2181 -p 8020:8020   \\ \n-p 18088:18088 -p 10000:10000 -p 21050:21050 -p 50070:50070  -p 50075:50075 \\\n-p 50060:50060  -p 50030:50030 -p 50010:50010\"\n\n\n\n\nSet a variable with a volume for file exchange with the container\n\n\n# Volume used to exchange stuff with the running container\nlocalVolumeDir=/home/me/cloudera_exchange_dir\n\n\n\n\nRun the container and store its ID\n\n\ncontainerId=`docker run --hostname=quickstart.cloudera -d \\\n                -v $localVolumeDir:/volume\n                --privileged=true -t -i $ports cloudera/quickstart /usr/bin/docker-quickstart`\n\n\n\n\nInstall and run the Kafka server\n\n\nKafka does not seem to be installed, but you can quickly do it:\n\n\n# See https://kafka.apache.org/quickstart\n\n# Download the binaries and execute this command:\n# > bin/kafka-server-start.sh config/server.properties\n\n# If you want to access Kafka from outside the container, you need to change this line in server.properties\n# zookeeper.connect=localhost:2181\n# And replace it with the Docker host public IP address\n\n\n\n\nOptional: Run Cloudera Manager\n\n\nsudo su\ncd /home/cloudera/\n./cloudera-manager",
+            "title": "Docker"
+        },
+        {
+            "location": "/docker/#cloudera-quickstart-docker-container",
+            "text": "Pull the image  # Pulls the image (4Gb!)\ndocker pull cloudera/quickstart  Set a variable with all needed ports to be opened  # Ports to be opened (most commonly used)\n# - 8888      expose hue interface\n# - 7180      expose cloudera manager\n# - 80        expose cloudera examples\n# - 8983      expose port of Web UI solr search \n# - 50070     expose name node web ui interface\n# - 50090     expose secondary name node\n# - 50075     expose data  node\n# - 50030     expose job tracker\n# - 50060     expose task trackers\n# - 60010     expose hbase master status\n# - 60030     expose hbase region server\n# - 9095      expose hbase thrift server\n# - 8020      expose hdfs port\n# - 8088      expose job tracker port\n# - 4040      expose port of spark\n# - 18088     expose history server web interface\n# ...\nports=\"-p 8888:8888 -p 7180:7180 -p 80:80 -p 4040:4040 -p 4041:4041 \\\n-p 4042:4042  -p 4043:4043 -p 9092:9092 -p 2181:2181 -p 8020:8020   \\ \n-p 18088:18088 -p 10000:10000 -p 21050:21050 -p 50070:50070  -p 50075:50075 \\\n-p 50060:50060  -p 50030:50030 -p 50010:50010\"  Set a variable with a volume for file exchange with the container  # Volume used to exchange stuff with the running container\nlocalVolumeDir=/home/me/cloudera_exchange_dir  Run the container and store its ID  containerId=`docker run --hostname=quickstart.cloudera -d \\\n                -v $localVolumeDir:/volume\n                --privileged=true -t -i $ports cloudera/quickstart /usr/bin/docker-quickstart`  Install and run the Kafka server  Kafka does not seem to be installed, but you can quickly do it:  # See https://kafka.apache.org/quickstart\n\n# Download the binaries and execute this command:\n# > bin/kafka-server-start.sh config/server.properties\n\n# If you want to access Kafka from outside the container, you need to change this line in server.properties\n# zookeeper.connect=localhost:2181\n# And replace it with the Docker host public IP address  Optional: Run Cloudera Manager  sudo su\ncd /home/cloudera/\n./cloudera-manager",
+            "title": "Cloudera Quickstart docker container"
+        },
+        {
+            "location": "/hive/",
+            "text": "Hive tables over Snappy Parquet\n\n\nTODO",
+            "title": "Hive"
+        },
+        {
+            "location": "/hive/#hive-tables-over-snappy-parquet",
+            "text": "TODO",
+            "title": "Hive tables over Snappy Parquet"
+        },
+        {
+            "location": "/java/",
+            "text": "How to open JMX ports\n\n\nJVM options to be set:\n\n\n   -Djavax.management.builder.initial= \n   -Dcom.sun.management.jmxremote \n   -Dcom.sun.management.jmxremote.port=8855 \n   -Dcom.sun.management.jmxremote.authenticate=false \n   -Dcom.sun.management.jmxremote.ssl=false\n\n\n\n\nSee \nthis",
+            "title": "Java"
+        },
+        {
+            "location": "/java/#how-to-open-jmx-ports",
+            "text": "JVM options to be set:     -Djavax.management.builder.initial= \n   -Dcom.sun.management.jmxremote \n   -Dcom.sun.management.jmxremote.port=8855 \n   -Dcom.sun.management.jmxremote.authenticate=false \n   -Dcom.sun.management.jmxremote.ssl=false  See  this",
+            "title": "How to open JMX ports"
+        },
+        {
+            "location": "/scala/",
+            "text": "Add dynamic partitions to a DataFrame\n\n\nTODO\n\n\nCode for parsing a JSON document\n\n\nTODO",
+            "title": "Scala"
+        },
+        {
+            "location": "/scala/#add-dynamic-partitions-to-a-dataframe",
+            "text": "TODO",
+            "title": "Add dynamic partitions to a DataFrame"
+        },
+        {
+            "location": "/scala/#code-for-parsing-a-json-document",
+            "text": "TODO",
+            "title": "Code for parsing a JSON document"
+        },
+        {
+            "location": "/spring/",
+            "text": "Simple set up with Spring Security\n\n\nTODO\n\n\nUse two DataSources\n\n\nTODO\n\n\nSpring DSL in Spring Integration\n\n\nTODO",
+            "title": "Spring"
+        },
+        {
+            "location": "/spring/#simple-set-up-with-spring-security",
+            "text": "TODO",
+            "title": "Simple set up with Spring Security"
+        },
+        {
+            "location": "/spring/#use-two-datasources",
+            "text": "TODO",
+            "title": "Use two DataSources"
+        },
+        {
+            "location": "/spring/#spring-dsl-in-spring-integration",
+            "text": "TODO",
+            "title": "Spring DSL in Spring Integration"
+        },
+        {
+            "location": "/spark/",
+            "text": "Read and write from/to CSV\n\n\nTODO\n\n\nWrite to Kafka\n\n\nTODO\n\n\nSpark Streaming setup\n\n\nTODO",
+            "title": "Spark"
+        },
+        {
+            "location": "/spark/#read-and-write-fromto-csv",
+            "text": "TODO",
+            "title": "Read and write from/to CSV"
+        },
+        {
+            "location": "/spark/#write-to-kafka",
+            "text": "TODO",
+            "title": "Write to Kafka"
+        },
+        {
+            "location": "/spark/#spark-streaming-setup",
+            "text": "TODO",
+            "title": "Spark Streaming setup"
+        }
+    ]
+}
