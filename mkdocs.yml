@@ -1,0 +1,13 @@
+site_name: Victor Code Notes
+pages:
+- Home: index.md
+- Code Notes:
+    - Bash: bash.md
+    - Docker: docker.md
+    - Hive: hive.md
+    - Java: java.md
+    - Scala: scala.md    
+    - Spring: spring.md
+    - Spark: spark.md
+
+theme: readthedocs
