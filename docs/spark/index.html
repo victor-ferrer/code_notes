@@ -97,10 +97,39 @@
 
         
             
+    <ul class="subnav">
+    <li><span>Spring</span></li>
+
+        
+            
     <li class="toctree-l1 ">
-        <a class="" href="../spring/">Spring</a>
+        <a class="" href="../spring/core/">Core</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../spring/batch/">Batch</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../spring/integration/">Integration</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../spring/security/">Security</a>
+        
+    </li>
+
+        
+    </ul>
 
         
             
@@ -112,10 +141,16 @@
                 <li class="toctree-l3"><a href="#read-and-write-fromto-csv">Read and write from/to CSV</a></li>
                 
             
-                <li class="toctree-l3"><a href="#write-to-kafka">Write to Kafka</a></li>
+                <li class="toctree-l3"><a href="#writing-a-json-dataframe-to-kafka">Writing a JSON DataFrame to Kafka</a></li>
                 
             
                 <li class="toctree-l3"><a href="#spark-streaming-setup">Spark Streaming setup</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#write-a-compressed-dataframe">Write a compressed DataFrame</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#add-dynamic-partitions-to-a-dataframe">Add dynamic partitions to a DataFrame</a></li>
                 
             
             </ul>
@@ -162,12 +197,101 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="read-and-write-fromto-csv">Read and write from/to CSV</h2>
+                <h1 id="read-and-write-fromto-csv">Read and write from/to CSV</h1>
 <p>TODO</p>
-<h2 id="write-to-kafka">Write to Kafka</h2>
-<p>TODO</p>
-<h2 id="spark-streaming-setup">Spark Streaming setup</h2>
-<p>TODO</p>
+<h1 id="writing-a-json-dataframe-to-kafka">Writing a JSON DataFrame to Kafka</h1>
+<p>Writing a RDD or DataFrame to Kafka requires the Producers to be created in each RDD partition</p>
+<pre><code>  private def writeJSONToKafka(df : DataFrame, topic: String): Unit =
+  {
+    val props = new util.HashMap[String, Object]()
+    props.put(&quot;bootstrap.servers&quot;,&quot;localhost:9092&quot;)
+    props.put(&quot;key.serializer&quot;,  &quot;org.apache.kafka.common.serialization.StringSerializer&quot;)
+    props.put(&quot;value.serializer&quot;,  &quot;org.apache.kafka.common.serialization.StringSerializer&quot;)
+
+    println(&quot;Writing JSON to Kafka&quot;)
+
+    df.toJSON.foreachPartition((partisions: Iterator[String]) =&gt; {
+      val producer: KafkaProducer[String, String] = new KafkaProducer[String, String](props)
+      partisions.foreach((line: String) =&gt; {
+          producer.send(new ProducerRecord[String, String](topic,null,line))
+      })
+    })
+  }
+
+</code></pre>
+
+<h1 id="spark-streaming-setup">Spark Streaming setup</h1>
+<p>SBT dependencies to be set:</p>
+<pre><code>libraryDependencies ++= {
+
+  val sparkVer = &quot;2.0.0&quot;
+  Seq(
+    &quot;org.apache.spark&quot; %% &quot;spark-streaming&quot; % sparkVer % &quot;provided&quot;,
+    &quot;org.apache.spark&quot; %% &quot;spark-streaming-kafka-0-8&quot; % sparkVer % &quot;provided&quot;,
+    &quot;org.apache.spark&quot; %% &quot;spark-core&quot; % sparkVer % &quot;provided&quot; withSources(),
+    &quot;org.apache.spark&quot; %% &quot;spark-hive&quot; % sparkVer % &quot;provided&quot;
+  )
+}
+</code></pre>
+
+<p>Stream set up and processing:</p>
+<pre><code>   // Initialize spark context
+    val conf = new SparkConf().setAppName(&quot;My Streaming Processor&quot;)
+    val ssc = new StreamingContext(conf, Seconds(30))
+    ssc.sparkContext.setLogLevel(&quot;ERROR&quot;)
+
+    // Kafka config
+    val kafkaConf = Map(
+    // TODO Maybe this one is all we need
+    &quot;metadata.broker.list&quot; -&gt; &quot;localhost:9092&quot;,
+    )
+
+    // Create a stream of Array[Byte] as key and as payload
+    val stream = KafkaUtils.createDirectStream[Array[Byte], Array[Byte], DefaultDecoder, DefaultDecoder](
+    ssc,
+    kafkaConf,
+    Set(&quot;myTopic&quot;)
+    )
+
+    // Process each batch of data in another function
+    stream.foreachRDD { rdd =&gt; processRdd(rdd,config)}
+
+    ssc.start()
+    ssc.awaitTermination()
+</code></pre>
+
+<h1 id="write-a-compressed-dataframe">Write a compressed DataFrame</h1>
+<pre><code>  val spark = SparkSession.builder.config(rdd.sparkContext.getConf).getOrCreate()
+  spark.sqlContext.setConf(&quot;spark.sql.parquet.compression.codec&quot;, &quot;snappy&quot;)
+
+  // Create the DF and add the partition columns
+  val targetDF = spark.sqlContext.createDataFrame(rowData, addPartitions(myTableSchema,partitionsArray))
+
+  // Write to Parquet
+  val parquetPath = &quot;/user/victor/mytable&quot;
+  targetDF.write.mode(&quot;append&quot;).partitionBy(partitions : _*).parquet(parquetPath)
+
+</code></pre>
+
+<h1 id="add-dynamic-partitions-to-a-dataframe">Add dynamic partitions to a DataFrame</h1>
+<p>Adds dynamic partitions to an existing schema, so they can be given by configuration</p>
+<pre><code>  def addPartitions(schema: StructType, partitions: Array[String]) : StructType = {
+    var array = new ArrayBuffer[StructField]()
+
+    // Add previous fields
+    schema.foreach(f =&gt; array += f)
+
+    // Add new partition fields
+    partitions.foreach(p =&gt; array += new StructField(p,StringType))
+
+    new StructType(array.toArray)
+  }
+
+  val myTableSchema = StructType(Array(StructField(&quot;mytimestamp&quot;, StringType, true),
+    StructField(&quot;key&quot;, StringType, true),
+    StructField(&quot;value&quot;, DoubleType, true)))   
+
+</code></pre>
               
             </div>
           </div>
@@ -176,7 +300,7 @@
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
       
-        <a href="../spring/" class="btn btn-neutral" title="Spring"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../spring/security/" class="btn btn-neutral" title="Security"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -202,7 +326,7 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../spring/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../spring/security/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
     </span>

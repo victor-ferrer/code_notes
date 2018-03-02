@@ -25,4 +25,4 @@ select * from mytable limit 100;
 Notes
 
  - Data should be stored in Snappy Parquet files and respecting the defined partitioning
- - TODO: See this example, where a DataFrame writes compressed data.
+ - See [this example](spark/#add-dynamic-partitions-to-a-dataframe), where a DataFrame writes compressed data.

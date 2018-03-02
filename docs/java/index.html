@@ -91,6 +91,9 @@
                 <li class="toctree-l3"><a href="#how-to-open-jmx-ports">How to open JMX ports</a></li>
                 
             
+                <li class="toctree-l3"><a href="#how-to-set-up-jvm-memory-settings">How to set up JVM memory settings</a></li>
+                
+            
             </ul>
         
     </li>
@@ -104,10 +107,39 @@
 
         
             
+    <ul class="subnav">
+    <li><span>Spring</span></li>
+
+        
+            
     <li class="toctree-l1 ">
-        <a class="" href="../spring/">Spring</a>
+        <a class="" href="../spring/core/">Core</a>
         
     </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../spring/batch/">Batch</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../spring/integration/">Integration</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../spring/security/">Security</a>
+        
+    </li>
+
+        
+    </ul>
 
         
             
@@ -158,14 +190,19 @@
               
                 <h1 id="how-to-open-jmx-ports">How to open JMX ports</h1>
 <p>JVM options to be set:</p>
-<pre><code>   -Djavax.management.builder.initial= 
-   -Dcom.sun.management.jmxremote 
-   -Dcom.sun.management.jmxremote.port=8855 
-   -Dcom.sun.management.jmxremote.authenticate=false 
-   -Dcom.sun.management.jmxremote.ssl=false
+<pre><code>-Djavax.management.builder.initial= 
+-Dcom.sun.management.jmxremote 
+-Dcom.sun.management.jmxremote.port=8855 
+-Dcom.sun.management.jmxremote.authenticate=false 
+-Dcom.sun.management.jmxremote.ssl=false
 </code></pre>
 
 <p>See <a href="https://stackoverflow.com/questions/856881/how-to-activate-jmx-on-my-jvm-for-access-with-jconsole/856882">this</a></p>
+<h1 id="how-to-set-up-jvm-memory-settings">How to set up JVM memory settings</h1>
+<p>JVM options to be set:</p>
+<pre><code># Starts with 16G and set a maximum of 24G
+-Xms16G -Xmx24G
+</code></pre>
               
             </div>
           </div>

@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/",
-            "text": "Welcome to Victor's Code Notes\n\n\nThis is a small collection of code notes that I'm gathering after finally ditching OneNote.\n\n\nAbout the autor\n\n\nVictor Ferrer is a Software Engineer, currently working at Ericsson.\n\n\nContact\n\n\n\n\nBlog\n\n\nStack Overflow profile\n\n\nLinkedin Profile",
+            "text": "Welcome to Victor's Code Notes\n\n\nThis is a small collection of code notes that I'm gathering after finally ditching OneNote.\n\n\nFeel free to clone them \nhere\n\n\nAbout the autor\n\n\nVictor Ferrer is a Software Engineer, currently working at Ericsson.\n\n\nContact\n\n\n\n\nBlog\n\n\nStack Overflow profile\n\n\nLinkedin Profile",
             "title": "Home"
         },
         {
             "location": "/#welcome-to-victors-code-notes",
-            "text": "This is a small collection of code notes that I'm gathering after finally ditching OneNote.  About the autor  Victor Ferrer is a Software Engineer, currently working at Ericsson.  Contact   Blog  Stack Overflow profile  Linkedin Profile",
+            "text": "This is a small collection of code notes that I'm gathering after finally ditching OneNote.  Feel free to clone them  here  About the autor  Victor Ferrer is a Software Engineer, currently working at Ericsson.  Contact   Blog  Stack Overflow profile  Linkedin Profile",
             "title": "Welcome to Victor's Code Notes"
         },
         {
@@ -32,62 +32,82 @@
         },
         {
             "location": "/hive/",
-            "text": "Hive tables over Snappy Parquet\n\n\nTODO",
+            "text": "Hive tables over Snappy Parquet\n\n\nUseful script for creating partitioned, snappy-based, Hive tables.\n\n\ndop table mytable;\n\nCREATE EXTERNAL TABLE `mytable`(\n      `mytimestamp` string, \n      `key` string,       \n      `value` double, \n    PARTITIONED BY ( \n      `year` int, \n      `month` int, \n      `day` int)\n  STORED AS PARQUET TBLPROPERTIES (\"parquet.compression\"=\"SNAPPY\");\n\nalter table mytable set location 'hdfs://[HDFS_HOST]:8020/user/victor/mytable';\n\nmsck repair table mytable;\n\nselect * from mytable limit 100;\n\n\n\n\nNotes\n\n\n\n\nData should be stored in Snappy Parquet files and respecting the defined partitioning\n\n\nSee \nthis example\n, where a DataFrame writes compressed data.",
             "title": "Hive"
         },
         {
             "location": "/hive/#hive-tables-over-snappy-parquet",
-            "text": "TODO",
+            "text": "Useful script for creating partitioned, snappy-based, Hive tables.  dop table mytable;\n\nCREATE EXTERNAL TABLE `mytable`(\n      `mytimestamp` string, \n      `key` string,       \n      `value` double, \n    PARTITIONED BY ( \n      `year` int, \n      `month` int, \n      `day` int)\n  STORED AS PARQUET TBLPROPERTIES (\"parquet.compression\"=\"SNAPPY\");\n\nalter table mytable set location 'hdfs://[HDFS_HOST]:8020/user/victor/mytable';\n\nmsck repair table mytable;\n\nselect * from mytable limit 100;  Notes   Data should be stored in Snappy Parquet files and respecting the defined partitioning  See  this example , where a DataFrame writes compressed data.",
             "title": "Hive tables over Snappy Parquet"
         },
         {
             "location": "/java/",
-            "text": "How to open JMX ports\n\n\nJVM options to be set:\n\n\n   -Djavax.management.builder.initial= \n   -Dcom.sun.management.jmxremote \n   -Dcom.sun.management.jmxremote.port=8855 \n   -Dcom.sun.management.jmxremote.authenticate=false \n   -Dcom.sun.management.jmxremote.ssl=false\n\n\n\n\nSee \nthis",
+            "text": "How to open JMX ports\n\n\nJVM options to be set:\n\n\n-Djavax.management.builder.initial= \n-Dcom.sun.management.jmxremote \n-Dcom.sun.management.jmxremote.port=8855 \n-Dcom.sun.management.jmxremote.authenticate=false \n-Dcom.sun.management.jmxremote.ssl=false\n\n\n\n\nSee \nthis\n\n\nHow to set up JVM memory settings\n\n\nJVM options to be set:\n\n\n# Starts with 16G and set a maximum of 24G\n-Xms16G -Xmx24G",
             "title": "Java"
         },
         {
             "location": "/java/#how-to-open-jmx-ports",
-            "text": "JVM options to be set:     -Djavax.management.builder.initial= \n   -Dcom.sun.management.jmxremote \n   -Dcom.sun.management.jmxremote.port=8855 \n   -Dcom.sun.management.jmxremote.authenticate=false \n   -Dcom.sun.management.jmxremote.ssl=false  See  this",
+            "text": "JVM options to be set:  -Djavax.management.builder.initial= \n-Dcom.sun.management.jmxremote \n-Dcom.sun.management.jmxremote.port=8855 \n-Dcom.sun.management.jmxremote.authenticate=false \n-Dcom.sun.management.jmxremote.ssl=false  See  this",
             "title": "How to open JMX ports"
         },
         {
+            "location": "/java/#how-to-set-up-jvm-memory-settings",
+            "text": "JVM options to be set:  # Starts with 16G and set a maximum of 24G\n-Xms16G -Xmx24G",
+            "title": "How to set up JVM memory settings"
+        },
+        {
             "location": "/scala/",
-            "text": "Add dynamic partitions to a DataFrame\n\n\nTODO\n\n\nCode for parsing a JSON document\n\n\nTODO",
+            "text": "Code for parsing a JSON document\n\n\n// This common class is the base of all classes parsed from the JSON\nclass CC[T] { def unapply(a:Any):Option[T] = Some(a.asInstanceOf[T]) }\n\n// Now, for every type that we might recover, we have a specialized class\n// M (map) and L (list) will be used to recover embedded objects from the JSON\nobject M extends CC[Map[String, Any]]\nobject L extends CC[List[Any]]\nobject S extends CC[String]\nobject D extends CC[Double]\nobject B extends CC[Boolean]\n\n\n\n\n\nNow, after parsing the JSON structure, we crawl along it and extract the needed fields\n\n\ndef parseJSONData(data: String) : List[UseCase] = {\n\n// We crawl along the JSON structure, retrieving the columns that will form our table structure\nval resultList = for {\n  Some(M(json)) <- List(JSON.parseFull(data))\n  // TODO\n\n} yield {\n  // TODO\n}",
             "title": "Scala"
         },
         {
-            "location": "/scala/#add-dynamic-partitions-to-a-dataframe",
-            "text": "TODO",
-            "title": "Add dynamic partitions to a DataFrame"
-        },
-        {
             "location": "/scala/#code-for-parsing-a-json-document",
-            "text": "TODO",
+            "text": "// This common class is the base of all classes parsed from the JSON\nclass CC[T] { def unapply(a:Any):Option[T] = Some(a.asInstanceOf[T]) }\n\n// Now, for every type that we might recover, we have a specialized class\n// M (map) and L (list) will be used to recover embedded objects from the JSON\nobject M extends CC[Map[String, Any]]\nobject L extends CC[List[Any]]\nobject S extends CC[String]\nobject D extends CC[Double]\nobject B extends CC[Boolean]  Now, after parsing the JSON structure, we crawl along it and extract the needed fields  def parseJSONData(data: String) : List[UseCase] = {\n\n// We crawl along the JSON structure, retrieving the columns that will form our table structure\nval resultList = for {\n  Some(M(json)) <- List(JSON.parseFull(data))\n  // TODO\n\n} yield {\n  // TODO\n}",
             "title": "Code for parsing a JSON document"
         },
         {
-            "location": "/spring/",
-            "text": "Simple set up with Spring Security\n\n\nTODO\n\n\nUse two DataSources\n\n\nTODO\n\n\nSpring DSL in Spring Integration\n\n\nTODO",
-            "title": "Spring"
+            "location": "/spring/core/",
+            "text": "Use two different DataSources\n\n\nTo use more than the predefined DataSource in Spring, for instance an H2 Database:\n\n\n### Add this new set of properties ###\n\n## URL used to connect to the H2 Database\nspring.secondDatasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE\n## Driver class used to connect to the H2 database (it will depend on datasource).\nspring.secondDatasource.driver-class-Name=org.h2.Driver\n## User name \nspring.secondDatasource.username=xxx\n## Password \nspring.secondDatasource.password=xxx\n## Datasource configuration for jobs database.\nspring.jpa.hibernate.ddl-auto=create-drop\nspring.secondDatasource.initialize=true\nspring.secondDatasource.test-on-borrow=true\nspring.secondDatasource.validation-query=select 1\n\n\n\n\n\nAdd this @Configuration class:\n\n\n/**\n * Config class holding several datasources, the default one and the H2\n */\n@Configuration\npublic class DataSourceConfiguration\n{\n    @Bean\n    @Qualifier(\"businessDataSource\")\n    @ConfigurationProperties(prefix = \"spring.datasource\")\n    public DataSource primaryDataSource()\n    {\n        return DataSourceBuilder.create().build();\n    }\n\n    @Bean\n    @Primary\n    @Qualifier(\"jobsDataSource\")\n    @ConfigurationProperties(prefix = \"spring.secondDatasource\")\n    public DataSource secondaryDataSource()\n    {\n        return DataSourceBuilder.create().build();\n    }\n}",
+            "title": "Core"
         },
         {
-            "location": "/spring/#simple-set-up-with-spring-security",
-            "text": "TODO",
-            "title": "Simple set up with Spring Security"
+            "location": "/spring/core/#use-two-different-datasources",
+            "text": "To use more than the predefined DataSource in Spring, for instance an H2 Database:  ### Add this new set of properties ###\n\n## URL used to connect to the H2 Database\nspring.secondDatasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE\n## Driver class used to connect to the H2 database (it will depend on datasource).\nspring.secondDatasource.driver-class-Name=org.h2.Driver\n## User name \nspring.secondDatasource.username=xxx\n## Password \nspring.secondDatasource.password=xxx\n## Datasource configuration for jobs database.\nspring.jpa.hibernate.ddl-auto=create-drop\nspring.secondDatasource.initialize=true\nspring.secondDatasource.test-on-borrow=true\nspring.secondDatasource.validation-query=select 1  Add this @Configuration class:  /**\n * Config class holding several datasources, the default one and the H2\n */\n@Configuration\npublic class DataSourceConfiguration\n{\n    @Bean\n    @Qualifier(\"businessDataSource\")\n    @ConfigurationProperties(prefix = \"spring.datasource\")\n    public DataSource primaryDataSource()\n    {\n        return DataSourceBuilder.create().build();\n    }\n\n    @Bean\n    @Primary\n    @Qualifier(\"jobsDataSource\")\n    @ConfigurationProperties(prefix = \"spring.secondDatasource\")\n    public DataSource secondaryDataSource()\n    {\n        return DataSourceBuilder.create().build();\n    }\n}",
+            "title": "Use two different DataSources"
         },
         {
-            "location": "/spring/#use-two-datasources",
-            "text": "TODO",
-            "title": "Use two DataSources"
+            "location": "/spring/batch/",
+            "text": "Spring Batch: Use seconday datasource for metadata\n\n\nOn top of \nthis example\n, add this @Configuration class:\n\n\nimport org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;\n\n// Another @Configuration class...\n\n@Autowired\n@Qualifier(\"jobsDataSource\")\nprivate DataSource dataSource;\n\n@Bean\npublic BatchConfigurer configurer()\n{\n    // This is required to avoid problems when jobs datasource is into some secondary datasource.\n    return new DefaultBatchConfigurer(dataSource);\n}",
+            "title": "Batch"
         },
         {
-            "location": "/spring/#spring-dsl-in-spring-integration",
+            "location": "/spring/batch/#spring-batch-use-seconday-datasource-for-metadata",
+            "text": "On top of  this example , add this @Configuration class:  import org.springframework.batch.core.configuration.annotation.DefaultBatchConfigurer;\n\n// Another @Configuration class...\n\n@Autowired\n@Qualifier(\"jobsDataSource\")\nprivate DataSource dataSource;\n\n@Bean\npublic BatchConfigurer configurer()\n{\n    // This is required to avoid problems when jobs datasource is into some secondary datasource.\n    return new DefaultBatchConfigurer(dataSource);\n}",
+            "title": "Spring Batch: Use seconday datasource for metadata"
+        },
+        {
+            "location": "/spring/integration/",
+            "text": "SFTP with Spring Integration DSL\n\n\nTODO",
+            "title": "Integration"
+        },
+        {
+            "location": "/spring/integration/#sftp-with-spring-integration-dsl",
             "text": "TODO",
-            "title": "Spring DSL in Spring Integration"
+            "title": "SFTP with Spring Integration DSL"
+        },
+        {
+            "location": "/spring/security/",
+            "text": "Simple set up with Spring Security and Spring Boot\n\n\nSimple in-memory authentication with special rules for several endopoints (local only)\n\n\n@Configuration\npublic class SecurityConfig extends WebSecurityConfigurerAdapter {\n\n    ...\n\n    @Autowired\n    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {\n        auth\n            .inMemoryAuthentication()\n            .withUser(\"user\").password(user_password).roles(\"USER\")\n        .and()\n            .withUser(\"admin\").password(admin_password).authorities(\"ADMIN\");\n    }\n\n    @Override\n    protected void configure(HttpSecurity http) throws Exception {\n        http\n            .csrf()\n            .disable()\n            .httpBasic()\n         .and()\n            .authorizeRequests()\n            .antMatchers(\"/admin/config/decrypt\").access(\"hasIpAddress('127.0.0.1/32') and hasAuthority('ADMIN')\")\n            .antMatchers(\"/admin/config/encrypt\").access(\"hasIpAddress('127.0.0.1/32') and hasAuthority('ADMIN')\")\n            .antMatchers(\"/admin/config/**\").authenticated()\n            .antMatchers(\"/**\").permitAll()\n        ;\n    }\n}\n\n\n\n\nTo use IPV4 instead of IPV6 use this:\n\n\n-Djava.net.preferIPv4Stack=true",
+            "title": "Security"
+        },
+        {
+            "location": "/spring/security/#simple-set-up-with-spring-security-and-spring-boot",
+            "text": "Simple in-memory authentication with special rules for several endopoints (local only)  @Configuration\npublic class SecurityConfig extends WebSecurityConfigurerAdapter {\n\n    ...\n\n    @Autowired\n    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {\n        auth\n            .inMemoryAuthentication()\n            .withUser(\"user\").password(user_password).roles(\"USER\")\n        .and()\n            .withUser(\"admin\").password(admin_password).authorities(\"ADMIN\");\n    }\n\n    @Override\n    protected void configure(HttpSecurity http) throws Exception {\n        http\n            .csrf()\n            .disable()\n            .httpBasic()\n         .and()\n            .authorizeRequests()\n            .antMatchers(\"/admin/config/decrypt\").access(\"hasIpAddress('127.0.0.1/32') and hasAuthority('ADMIN')\")\n            .antMatchers(\"/admin/config/encrypt\").access(\"hasIpAddress('127.0.0.1/32') and hasAuthority('ADMIN')\")\n            .antMatchers(\"/admin/config/**\").authenticated()\n            .antMatchers(\"/**\").permitAll()\n        ;\n    }\n}  To use IPV4 instead of IPV6 use this:  -Djava.net.preferIPv4Stack=true",
+            "title": "Simple set up with Spring Security and Spring Boot"
         },
         {
             "location": "/spark/",
-            "text": "Read and write from/to CSV\n\n\nTODO\n\n\nWrite to Kafka\n\n\nTODO\n\n\nSpark Streaming setup\n\n\nTODO",
+            "text": "Read and write from/to CSV\n\n\nTODO\n\n\nWriting a JSON DataFrame to Kafka\n\n\nWriting a RDD or DataFrame to Kafka requires the Producers to be created in each RDD partition\n\n\n  private def writeJSONToKafka(df : DataFrame, topic: String): Unit =\n  {\n    val props = new util.HashMap[String, Object]()\n    props.put(\"bootstrap.servers\",\"localhost:9092\")\n    props.put(\"key.serializer\",  \"org.apache.kafka.common.serialization.StringSerializer\")\n    props.put(\"value.serializer\",  \"org.apache.kafka.common.serialization.StringSerializer\")\n\n    println(\"Writing JSON to Kafka\")\n\n    df.toJSON.foreachPartition((partisions: Iterator[String]) => {\n      val producer: KafkaProducer[String, String] = new KafkaProducer[String, String](props)\n      partisions.foreach((line: String) => {\n          producer.send(new ProducerRecord[String, String](topic,null,line))\n      })\n    })\n  }\n\n\n\n\n\nSpark Streaming setup\n\n\nSBT dependencies to be set:\n\n\nlibraryDependencies ++= {\n\n  val sparkVer = \"2.0.0\"\n  Seq(\n    \"org.apache.spark\" %% \"spark-streaming\" % sparkVer % \"provided\",\n    \"org.apache.spark\" %% \"spark-streaming-kafka-0-8\" % sparkVer % \"provided\",\n    \"org.apache.spark\" %% \"spark-core\" % sparkVer % \"provided\" withSources(),\n    \"org.apache.spark\" %% \"spark-hive\" % sparkVer % \"provided\"\n  )\n}\n\n\n\n\nStream set up and processing:\n\n\n   // Initialize spark context\n    val conf = new SparkConf().setAppName(\"My Streaming Processor\")\n    val ssc = new StreamingContext(conf, Seconds(30))\n    ssc.sparkContext.setLogLevel(\"ERROR\")\n\n    // Kafka config\n    val kafkaConf = Map(\n    // TODO Maybe this one is all we need\n    \"metadata.broker.list\" -> \"localhost:9092\",\n    )\n\n    // Create a stream of Array[Byte] as key and as payload\n    val stream = KafkaUtils.createDirectStream[Array[Byte], Array[Byte], DefaultDecoder, DefaultDecoder](\n    ssc,\n    kafkaConf,\n    Set(\"myTopic\")\n    )\n\n    // Process each batch of data in another function\n    stream.foreachRDD { rdd => processRdd(rdd,config)}\n\n    ssc.start()\n    ssc.awaitTermination()\n\n\n\n\nWrite a compressed DataFrame\n\n\n  val spark = SparkSession.builder.config(rdd.sparkContext.getConf).getOrCreate()\n  spark.sqlContext.setConf(\"spark.sql.parquet.compression.codec\", \"snappy\")\n\n  // Create the DF and add the partition columns\n  val targetDF = spark.sqlContext.createDataFrame(rowData, addPartitions(myTableSchema,partitionsArray))\n\n  // Write to Parquet\n  val parquetPath = \"/user/victor/mytable\"\n  targetDF.write.mode(\"append\").partitionBy(partitions : _*).parquet(parquetPath)\n\n\n\n\n\nAdd dynamic partitions to a DataFrame\n\n\nAdds dynamic partitions to an existing schema, so they can be given by configuration\n\n\n  def addPartitions(schema: StructType, partitions: Array[String]) : StructType = {\n    var array = new ArrayBuffer[StructField]()\n\n    // Add previous fields\n    schema.foreach(f => array += f)\n\n    // Add new partition fields\n    partitions.foreach(p => array += new StructField(p,StringType))\n\n    new StructType(array.toArray)\n  }\n\n  val myTableSchema = StructType(Array(StructField(\"mytimestamp\", StringType, true),\n    StructField(\"key\", StringType, true),\n    StructField(\"value\", DoubleType, true)))",
             "title": "Spark"
         },
         {
@@ -96,14 +116,24 @@
             "title": "Read and write from/to CSV"
         },
         {
-            "location": "/spark/#write-to-kafka",
-            "text": "TODO",
-            "title": "Write to Kafka"
+            "location": "/spark/#writing-a-json-dataframe-to-kafka",
+            "text": "Writing a RDD or DataFrame to Kafka requires the Producers to be created in each RDD partition    private def writeJSONToKafka(df : DataFrame, topic: String): Unit =\n  {\n    val props = new util.HashMap[String, Object]()\n    props.put(\"bootstrap.servers\",\"localhost:9092\")\n    props.put(\"key.serializer\",  \"org.apache.kafka.common.serialization.StringSerializer\")\n    props.put(\"value.serializer\",  \"org.apache.kafka.common.serialization.StringSerializer\")\n\n    println(\"Writing JSON to Kafka\")\n\n    df.toJSON.foreachPartition((partisions: Iterator[String]) => {\n      val producer: KafkaProducer[String, String] = new KafkaProducer[String, String](props)\n      partisions.foreach((line: String) => {\n          producer.send(new ProducerRecord[String, String](topic,null,line))\n      })\n    })\n  }",
+            "title": "Writing a JSON DataFrame to Kafka"
         },
         {
             "location": "/spark/#spark-streaming-setup",
-            "text": "TODO",
+            "text": "SBT dependencies to be set:  libraryDependencies ++= {\n\n  val sparkVer = \"2.0.0\"\n  Seq(\n    \"org.apache.spark\" %% \"spark-streaming\" % sparkVer % \"provided\",\n    \"org.apache.spark\" %% \"spark-streaming-kafka-0-8\" % sparkVer % \"provided\",\n    \"org.apache.spark\" %% \"spark-core\" % sparkVer % \"provided\" withSources(),\n    \"org.apache.spark\" %% \"spark-hive\" % sparkVer % \"provided\"\n  )\n}  Stream set up and processing:     // Initialize spark context\n    val conf = new SparkConf().setAppName(\"My Streaming Processor\")\n    val ssc = new StreamingContext(conf, Seconds(30))\n    ssc.sparkContext.setLogLevel(\"ERROR\")\n\n    // Kafka config\n    val kafkaConf = Map(\n    // TODO Maybe this one is all we need\n    \"metadata.broker.list\" -> \"localhost:9092\",\n    )\n\n    // Create a stream of Array[Byte] as key and as payload\n    val stream = KafkaUtils.createDirectStream[Array[Byte], Array[Byte], DefaultDecoder, DefaultDecoder](\n    ssc,\n    kafkaConf,\n    Set(\"myTopic\")\n    )\n\n    // Process each batch of data in another function\n    stream.foreachRDD { rdd => processRdd(rdd,config)}\n\n    ssc.start()\n    ssc.awaitTermination()",
             "title": "Spark Streaming setup"
+        },
+        {
+            "location": "/spark/#write-a-compressed-dataframe",
+            "text": "val spark = SparkSession.builder.config(rdd.sparkContext.getConf).getOrCreate()\n  spark.sqlContext.setConf(\"spark.sql.parquet.compression.codec\", \"snappy\")\n\n  // Create the DF and add the partition columns\n  val targetDF = spark.sqlContext.createDataFrame(rowData, addPartitions(myTableSchema,partitionsArray))\n\n  // Write to Parquet\n  val parquetPath = \"/user/victor/mytable\"\n  targetDF.write.mode(\"append\").partitionBy(partitions : _*).parquet(parquetPath)",
+            "title": "Write a compressed DataFrame"
+        },
+        {
+            "location": "/spark/#add-dynamic-partitions-to-a-dataframe",
+            "text": "Adds dynamic partitions to an existing schema, so they can be given by configuration    def addPartitions(schema: StructType, partitions: Array[String]) : StructType = {\n    var array = new ArrayBuffer[StructField]()\n\n    // Add previous fields\n    schema.foreach(f => array += f)\n\n    // Add new partition fields\n    partitions.foreach(p => array += new StructField(p,StringType))\n\n    new StructType(array.toArray)\n  }\n\n  val myTableSchema = StructType(Array(StructField(\"mytimestamp\", StringType, true),\n    StructField(\"key\", StringType, true),\n    StructField(\"value\", DoubleType, true)))",
+            "title": "Add dynamic partitions to a DataFrame"
         }
     ]
 }

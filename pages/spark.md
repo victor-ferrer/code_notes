@@ -24,7 +24,7 @@ Writing a RDD or DataFrame to Kafka requires the Producers to be created in each
     })
   }
 
-````
+```
 
 # Spark Streaming setup
 

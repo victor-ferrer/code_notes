@@ -8,8 +8,12 @@ pages:
     - Docker: docker.md
     - Hive: hive.md
     - Java: java.md
-    - Scala: scala.md    
-    - Spring: spring.md
+    - Scala: scala.md
+    - Spring:
+       - 'Core': spring/core.md
+       - 'Batch': spring/batch.md
+       - 'Integration': spring/integration.md
+       - 'Security': spring/security.md       
     - Spark: spark.md
 
 theme: readthedocs
