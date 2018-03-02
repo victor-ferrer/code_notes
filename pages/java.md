@@ -11,3 +11,12 @@ JVM options to be set:
 ```
 
 See [this](https://stackoverflow.com/questions/856881/how-to-activate-jmx-on-my-jvm-for-access-with-jconsole/856882)
+
+# How to set up JVM memory settings
+
+JVM options to be set:
+
+```
+    # Starts with 16G and set a maximum of 24G
+    -Xms16G -Xmx24G
+```

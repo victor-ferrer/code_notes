@@ -1,3 +1,28 @@
 ## Hive tables over Snappy Parquet
 
-TODO
+Useful script for creating partitioned, snappy-based, Hive tables.
+
+```
+dop table mytable;
+
+CREATE EXTERNAL TABLE `mytable`(
+	  `mytimestamp` string, 
+	  `key` string, 	  
+	  `value` double, 
+	PARTITIONED BY ( 
+	  `year` int, 
+	  `month` int, 
+      `day` int)
+  STORED AS PARQUET TBLPROPERTIES ("parquet.compression"="SNAPPY");
+  
+alter table mytable set location 'hdfs://[HDFS_HOST]:8020/user/victor/mytable';
+  
+msck repair table mytable;
+  
+select * from mytable limit 100;
+```
+
+Notes
+
+ - Data should be stored in Snappy Parquet files and respecting the defined partitioning
+ - TODO: See this example, where a DataFrame writes compressed data.

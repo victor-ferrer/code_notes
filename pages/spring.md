@@ -1,9 +1,9 @@
 
-## Simple set up with Spring Security
+## Simple set up with Spring Security and Spring Boot
 
 TODO
 
-## Use two DataSources
+## Use two different DataSources
 
 TODO
 
