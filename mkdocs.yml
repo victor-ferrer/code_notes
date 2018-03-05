@@ -8,7 +8,8 @@ pages:
     - Docker: docker.md
     - Hive: hive.md
     - Java: java.md
-    - Scala: scala.md
+    - Scala: 
+       - 'Parse a JSON' : scala/json.md
     - Spring:
        - 'Core': spring/core.md
        - 'Batch': spring/batch.md
