@@ -231,6 +231,7 @@
             <div class="section">
               
                 <h2 id="code-for-parsing-a-json-document">Code for parsing a JSON document</h2>
+<p>These auxiliary classes help retrieving the values of the different types of JSON objects:</p>
 <pre><code>// This common class is the base of all classes parsed from the JSON
 class CC[T] { def unapply(a:Any):Option[T] = Some(a.asInstanceOf[T]) }
 

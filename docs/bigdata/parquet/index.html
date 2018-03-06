@@ -282,11 +282,12 @@ chmod +x kite-dataset
 </code></pre>
 
 <p><em>Create the dataset</em></p>
-<p>kite-dataset create dataset:hdfs:/victor/mypojo --schema edos_schema.txt  --format parquet -p partitions.txt</p>
-<p><em>Finally, Import the data from a CSV</em>
-```
-kite-dataset csv-import bigdata.csv dataset:hdfs:/victor/mypojo --use-hdfs
-```` </p>
+<pre><code> kite-dataset create dataset:hdfs:/victor/mypojo --schema edos_schema.txt  --format parquet -p partitions.txt
+</code></pre>
+
+<p><em>Finally, Import the data from a CSV</em></p>
+<pre><code>kite-dataset csv-import bigdata.csv dataset:hdfs:/victor/mypojo --use-hdfs
+</code></pre>
               
             </div>
           </div>

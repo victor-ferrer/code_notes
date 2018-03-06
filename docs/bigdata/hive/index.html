@@ -232,7 +232,7 @@
               
                 <h2 id="hive-tables-over-snappy-parquet">Hive tables over Snappy Parquet</h2>
 <p>Useful script for creating partitioned, snappy-based, Hive tables.</p>
-<pre><code>dop table mytable;
+<pre><code>drop table mytable;
 
 CREATE EXTERNAL TABLE `mytable`(
       `mytimestamp` string, 
@@ -254,7 +254,7 @@ select * from mytable limit 100;
 <p>Notes</p>
 <ul>
 <li>Data should be stored in Snappy Parquet files and respecting the defined partitioning</li>
-<li>See <a href="../spark/#add-dynamic-partitions-to-a-dataframe">this example</a>, where a DataFrame writes compressed data.</li>
+<li>See <a href="../../spark/spark/#add-dynamic-partitions-to-a-dataframe">this example</a>, where a DataFrame writes compressed data.</li>
 </ul>
               
             </div>
