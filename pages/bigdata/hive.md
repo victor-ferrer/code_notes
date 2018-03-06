@@ -3,7 +3,7 @@
 Useful script for creating partitioned, snappy-based, Hive tables.
 
 ```
-dop table mytable;
+drop table mytable;
 
 CREATE EXTERNAL TABLE `mytable`(
 	  `mytimestamp` string, 
@@ -25,4 +25,4 @@ select * from mytable limit 100;
 Notes
 
  - Data should be stored in Snappy Parquet files and respecting the defined partitioning
- - See [this example](spark/#add-dynamic-partitions-to-a-dataframe), where a DataFrame writes compressed data.
+ - See [this example](../spark/spark.md#add-dynamic-partitions-to-a-dataframe), where a DataFrame writes compressed data.

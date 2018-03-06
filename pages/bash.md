@@ -1,5 +1,7 @@
 # Iterate over files and search for a pattern
 
+This script iterates over all XML files in the current directory, searches for the pattern `"Name="` and extracts the XML value. Fnally renames the original XML file with the recovered value.
+
 *Script*
 
 ```

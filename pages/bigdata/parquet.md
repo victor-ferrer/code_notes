@@ -52,6 +52,7 @@ With this JSON:
 } ]
 ```
 
+
 And then invoke:
 
 ```
@@ -60,9 +61,12 @@ kite-dataset  partition-config timestamp:year timestamp:month timestamp:day -s s
 
 *Create the dataset*
 
+```
  kite-dataset create dataset:hdfs:/victor/mypojo --schema edos_schema.txt  --format parquet -p partitions.txt
+```
 
 *Finally, Import the data from a CSV*
+
 ```
 kite-dataset csv-import bigdata.csv dataset:hdfs:/victor/mypojo --use-hdfs
-```` 
+```
