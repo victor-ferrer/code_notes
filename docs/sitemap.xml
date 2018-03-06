@@ -4,7 +4,7 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2018-03-02</lastmod>
+     <lastmod>2018-03-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,31 +13,7 @@
         
     <url>
      <loc>None/bash/</loc>
-     <lastmod>2018-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/docker/</loc>
-     <lastmod>2018-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/hive/</loc>
-     <lastmod>2018-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/java/</loc>
-     <lastmod>2018-03-02</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>None/scala/</loc>
-     <lastmod>2018-03-02</lastmod>
+     <lastmod>2018-03-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -48,8 +24,32 @@
     </url>
         
     <url>
-     <loc>None/spark/</loc>
-     <lastmod>2018-03-02</lastmod>
+     <loc>None/docker/</loc>
+     <lastmod>2018-03-06</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None</loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None</loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None</loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/spark/spark/</loc>
+     <lastmod>2018-03-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

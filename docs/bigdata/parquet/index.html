@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Integration - Victor Code Notes</title>
+  <title>Parquet - Victor Code Notes</title>
   
 
   <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -20,7 +20,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Integration";
+    var mkdocs_page_name = "Parquet";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -75,14 +75,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../../bigdata/hive/">Hive</a>
+        <a class="" href="../hive/">Hive</a>
         
     </li>
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../../bigdata/parquet/">Parquet</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Parquet</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#manual-parquet-generation-with-kite-sdk">Manual Parquet generation with Kite SDK</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -141,42 +148,35 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../cloud/">Cloud</a>
+        <a class="" href="../../spring/cloud/">Cloud</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../core/">Core</a>
+        <a class="" href="../../spring/core/">Core</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../batch/">Batch</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Integration</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#sftp-with-spring-integration-dsl">SFTP with Spring Integration DSL</a></li>
-                
-            
-            </ul>
+        <a class="" href="../../spring/batch/">Batch</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../security/">Security</a>
+        <a class="" href="../../spring/integration/">Integration</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../spring/security/">Security</a>
         
     </li>
 
@@ -216,11 +216,11 @@
     
       
         
-          <li>Spring &raquo;</li>
+          <li>Big Data &raquo;</li>
         
       
     
-    <li>Integration</li>
+    <li>Parquet</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -230,8 +230,63 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="sftp-with-spring-integration-dsl">SFTP with Spring Integration DSL</h2>
-<p>TODO</p>
+                <h2 id="manual-parquet-generation-with-kite-sdk">Manual Parquet generation with Kite SDK</h2>
+<p>Installation:</p>
+<pre><code>curl http://central.maven.org/maven2/org/kitesdk/kite-tools/1.1.0/kite-tools-1.1.0-binary.jar -o kite-dataset
+chmod +x kite-dataset
+</code></pre>
+
+<p>Create the files´ schema:</p>
+<pre><code>{
+  &quot;type&quot; : &quot;record&quot;,
+  &quot;name&quot; : &quot;GenericCell4gHdfs&quot;,
+  &quot;namespace&quot; : &quot;com.mydomain.mypojo&quot;,
+  &quot;doc&quot; : &quot;Sample object&quot;,
+  &quot;fields&quot; : [ {
+    &quot;name&quot; : &quot;timestamp&quot;,
+    &quot;type&quot; : &quot;string&quot;
+  }, {
+    &quot;name&quot; : &quot;value&quot;,
+    &quot;type&quot; : [ &quot;null&quot;, &quot;double&quot; ],
+    &quot;default&quot; : null
+  }, {
+    &quot;name&quot; : &quot;longValue&quot;,
+    &quot;type&quot; : &quot;long&quot;
+  }, {
+    &quot;name&quot; : &quot;intValue&quot;,
+    &quot;type&quot; : &quot;int&quot;
+  } ]
+}
+
+</code></pre>
+
+<p><em>Create the partitions`definition:</em></p>
+<p>With this JSON:</p>
+<pre><code>[ {
+  &quot;name&quot; : &quot;year&quot;,
+  &quot;source&quot; : &quot;timestamp&quot;,
+  &quot;type&quot; : &quot;year&quot;
+}, {
+  &quot;name&quot; : &quot;month&quot;,
+  &quot;source&quot; : &quot;timestamp&quot;,
+  &quot;type&quot; : &quot;month&quot;
+}, {
+  &quot;name&quot; : &quot;day&quot;,
+  &quot;source&quot; : &quot;timestamp&quot;,
+  &quot;type&quot; : &quot;day&quot;
+} ]
+</code></pre>
+
+<p>And then invoke:</p>
+<pre><code>kite-dataset  partition-config timestamp:year timestamp:month timestamp:day -s schema.txt -o partitions.txt
+</code></pre>
+
+<p><em>Create the dataset</em></p>
+<p>kite-dataset create dataset:hdfs:/victor/mypojo --schema edos_schema.txt  --format parquet -p partitions.txt</p>
+<p><em>Finally, Import the data from a CSV</em>
+```
+kite-dataset csv-import bigdata.csv dataset:hdfs:/victor/mypojo --use-hdfs
+```` </p>
               
             </div>
           </div>
@@ -239,10 +294,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../security/" class="btn btn-neutral float-right" title="Security"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../docker/" class="btn btn-neutral float-right" title="Docker"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../batch/" class="btn btn-neutral" title="Batch"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../hive/" class="btn btn-neutral" title="Hive"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -268,10 +323,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../batch/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../hive/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../security/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../docker/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
