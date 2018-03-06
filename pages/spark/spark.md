@@ -1,6 +1,31 @@
 # Read and write from/to CSV
 
-TODO
+If Spark Version is older than 2.0, this dependency is needed in SBT;
+```
+"com.databricks"%"spark-csv_2.10"%"1.5.0"
+```
+
+Then load the CSV into a DataFrame:
+```
+# Need to provide a Schame and a File Path
+val valdf=sqlContext.read
+.format("com.databricks.spark.csv")
+.schema(schema)
+.option("delimiter",",")
+.option("nullValue","")
+.option("header","true")
+.option("treatEmptyValuesAsNulls","true")
+.load(csv_path)
+```
+
+To write the DataFrame to a SINGLE CSV file:
+```
+// Write all to one partition
+df.coalesce(1).write.format("com.databricks.spark.csv")
+.option("header","true")
+.save("mydata.csv")
+} 
+```
 
 # Writing a JSON DataFrame to Kafka
 
