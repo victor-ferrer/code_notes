@@ -5,11 +5,17 @@ pages:
 - Home: index.md
 - Code Notes:
     - Bash: bash.md
-    - Docker: docker.md
-    - Hive: hive.md
-    - Java: java.md
-    - Scala: scala.md
+    - Big Data:
+      - 'Hive': bigdata/hive.md
+      - 'Parquet' : bigdata/parquet.md
+    - Docker: docker.md     
+    - Java: 
+       - 'Cryptography' : java/crypto.md
+       - 'JVM' : java/jvm.md
+    - Scala: 
+       - 'Parse a JSON' : scala/json.md
     - Spring:
+       - 'Cloud' : spring/cloud.md
        - 'Core': spring/core.md
        - 'Batch': spring/batch.md
        - 'Integration': spring/integration.md
