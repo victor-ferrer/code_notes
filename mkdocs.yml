@@ -12,6 +12,7 @@ pages:
     - Java: 
        - 'Cryptography' : java/crypto.md
        - 'JVM' : java/jvm.md
+       - 'File/URL/HDFS Properties' : java/properties.md
     - Scala: 
        - 'Parse a JSON' : scala/json.md
     - Spring:
