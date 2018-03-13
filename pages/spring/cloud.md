@@ -1,6 +1,6 @@
 # Add encryption to a Spring Cloud Config
 
-See [here](java/cryto.md) on how to setup a certificate. This section describes how to activate encryption in a Spring Cloud Config server.
+See [here](/java/crypto) on how to setup a certificate. This section describes how to activate encryption in a Spring Cloud Config server.
 
 *New properties to use*
 ```

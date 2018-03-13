@@ -1,6 +1,8 @@
 
 ## Code for parsing a JSON document
 
+These auxiliary classes help retrieving the values of the different types of JSON objects:
+
 ```
 // This common class is the base of all classes parsed from the JSON
 class CC[T] { def unapply(a:Any):Option[T] = Some(a.asInstanceOf[T]) }

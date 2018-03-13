@@ -21,6 +21,6 @@ pages:
        - 'Batch': spring/batch.md
        - 'Integration': spring/integration.md
        - 'Security': spring/security.md       
-    - Spark: spark.md
+    - Spark: spark/spark.md
 
 theme: readthedocs

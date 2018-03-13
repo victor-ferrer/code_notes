@@ -1,8 +1,8 @@
 # Use the cryptographic extensions in Java
 
 *Installation*
-Download from [here](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-
-2133166.html (http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html) and copy to the local Java home folder.
+
+Download from [here](http://www.oracle.com/technetwork/java/javase/downloads/jce8-download-2133166.html) and copy to the local Java home folder.
 
 *Create a certificate*
 
