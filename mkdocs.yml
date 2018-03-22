@@ -14,6 +14,7 @@ pages:
        - 'JVM' : java/jvm.md
        - 'File/URL/HDFS Properties' : java/properties.md
     - Scala: 
+       - 'Cheatsheets' : scala/cheatsheets.md
        - 'Parse a JSON' : scala/json.md
     - Spring:
        - 'Cloud' : spring/cloud.md
@@ -21,6 +22,8 @@ pages:
        - 'Batch': spring/batch.md
        - 'Integration': spring/integration.md
        - 'Security': spring/security.md       
-    - Spark: spark/spark.md
+    - Spark: 
+       - 'DataFrames' : spark/spark.md
+       - 'Structured Streaming' : spark/structured_streaming.md
 
 theme: readthedocs
