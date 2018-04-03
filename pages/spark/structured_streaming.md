@@ -1,3 +1,4 @@
+
 # Structured Streaming Example
 
 *Producer process used for testing*
@@ -30,7 +31,9 @@ libraryDependencies ++= {
 Spark Submit command
 
 ```
-spark2-submit  --class com.ericsson.streaming.structured.StructuredStreamingMain --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.1.0,org.apache.kafka:kafka-clients:0.10.0.1 sparkstructuredstreamingconsumer_2.11-0.1.jar topic2345 172.29.45.149:9092 WARN
+export SPARK_KAFKA_VERSION=0.10 && spark2-submit  --class com.ericsson.streaming.structured.StructuredStreamingMain --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.1.0,org.apache.kafka:kafka-clients:0.10.0.1 sparkstructuredstreamingconsumer_2.11-0.1.jar topic2345 172.29.45.149:9092 WARN
 ```
 
+Output formats and options
 
+https://github.com/jaceklaskowski/spark-structured-streaming-book/blob/master/spark-sql-streaming-DataStreamReader.adoc

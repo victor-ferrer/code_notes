@@ -9,6 +9,8 @@ pages:
       - 'Hive': bigdata/hive.md
       - 'Parquet' : bigdata/parquet.md
     - Docker: docker.md     
+    - Git:
+       - 'SSH Usage' : git/ssh-clone.md
     - Java: 
        - 'Cryptography' : java/crypto.md
        - 'JVM' : java/jvm.md
