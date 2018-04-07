@@ -51,6 +51,16 @@
             "title": "Cloudera Quickstart docker container"
         },
         {
+            "location": "/git/ssh-clone/",
+            "text": "Clone a repo using a SSH private key\n\n\nTo clone a repo using a previously registred SSH key\n\n\nssh-agent bash -c 'ssh-add /somewhere/yourkey; git clone git@github.com:user/project.git'\n\n\n\n\nSee this \nStackOverflow question",
+            "title": "SSH Usage"
+        },
+        {
+            "location": "/git/ssh-clone/#clone-a-repo-using-a-ssh-private-key",
+            "text": "To clone a repo using a previously registred SSH key  ssh-agent bash -c 'ssh-add /somewhere/yourkey; git clone git@github.com:user/project.git'  See this  StackOverflow question",
+            "title": "Clone a repo using a SSH private key"
+        },
+        {
             "location": "/java/crypto/",
             "text": "Use the cryptographic extensions in Java\n\n\nInstallation\n\n\nDownload from \nhere\n and copy to the local Java home folder.\n\n\nCreate a certificate\n\n\nThis is an easy way to generate a self-signed certificate. Not a recommended production setup!\n\n\n$ keytool -genkeypair -alias mytestkey -keyalg RSA \\ \n          -dname \"CN=WebServer,OU=Unit,O=Organization,L=City,S=State,C=US\" \\ \n          -keypass changeme -keystore server.jks -storepass letmein",
             "title": "Cryptography"
@@ -84,6 +94,16 @@
             "location": "/java/properties/#load-a-javautilproperties-from-fileurlhdfs",
             "text": "/**\n* Utility class that provides logic for reading Properties objects from several locations:\n* - URL (HTTP/S)\n* - File\n* - HDFS \n*/\npublic class PropertiesReader {\n\n    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesReader.class);\n\n    private static final String HTTP_RESOURCE_REGEX = \"(http[s]?://.*[:[0-9]+]?/.*)\";\n\n    /**\n     * Gets an InputStream from either a File, URL or HDFS\n    public static InputStream getFileInputStream(String path) throws IOException \n    {\n        // Try with an HTTP(S) resource\n        Pattern httpPat = Pattern.compile(HTTP_RESOURCE_REGEX);\n        Matcher httpMatcher = httpPat.matcher(path);\n\n        if (httpMatcher.matches()){\n            return getHTTPInputStream(httpMatcher.group());\n        }\n\n        // TODO Copy HDFS block\n\n        // Now try with a regular file\n        return new FileInputStream(path);\n    }\n\n    /**\n     * @param path String representing the location of the properties file. Can be HDFS, URL or local file\n     *  @return the loaded Properties object\n     *  @throws URISyntaxException \n     * @throws IOException \n     */\n    public static Properties getProperties(String path) throws IOException\n    {\n        // Try with an HDFS resource\n        Properties toReturn = new Properties();\n        toReturn.load(getFileInputStream(path));\n\n        return toReturn;\n    }\n\n    private static InputStream getHTTPInputStream(String path) throws IOException {\n        LOGGER.info(String.format(\"Trying to open URL at \" + path));\n        return new URL(path);\n    }\n}",
             "title": "Load a java.util.properties from File/URL/HDFS"
+        },
+        {
+            "location": "/scala/cheatsheets/",
+            "text": "Scala cheatsheets and job questions\n\n\n\n\nJournal Dev Scala Interview Questions\n\n\nScala Interview Questions - Github",
+            "title": "Cheatsheets"
+        },
+        {
+            "location": "/scala/cheatsheets/#scala-cheatsheets-and-job-questions",
+            "text": "Journal Dev Scala Interview Questions  Scala Interview Questions - Github",
+            "title": "Scala cheatsheets and job questions"
         },
         {
             "location": "/scala/json/",
@@ -148,7 +168,7 @@
         {
             "location": "/spark/spark/",
             "text": "Read and write from/to CSV\n\n\nIf Spark Version is older than 2.0, this dependency is needed in SBT;\n\n\n\"com.databricks\"%\"spark-csv_2.10\"%\"1.5.0\"\n\n\n\n\nThen load the CSV into a DataFrame:\n\n\n# Need to provide a Schame and a File Path\nval valdf=sqlContext.read\n.format(\"com.databricks.spark.csv\")\n.schema(schema)\n.option(\"delimiter\",\",\")\n.option(\"nullValue\",\"\")\n.option(\"header\",\"true\")\n.option(\"treatEmptyValuesAsNulls\",\"true\")\n.load(csv_path)\n\n\n\n\nTo write the DataFrame to a SINGLE CSV file:\n\n\n// Write all to one partition\ndf.coalesce(1).write.format(\"com.databricks.spark.csv\")\n.option(\"header\",\"true\")\n.save(\"mydata.csv\")\n} \n\n\n\n\nWriting a JSON DataFrame to Kafka\n\n\nWriting a RDD or DataFrame to Kafka requires the Producers to be created in each RDD partition\n\n\n  private def writeJSONToKafka(df : DataFrame, topic: String): Unit =\n  {\n    val props = new util.HashMap[String, Object]()\n    props.put(\"bootstrap.servers\",\"localhost:9092\")\n    props.put(\"key.serializer\",  \"org.apache.kafka.common.serialization.StringSerializer\")\n    props.put(\"value.serializer\",  \"org.apache.kafka.common.serialization.StringSerializer\")\n\n    println(\"Writing JSON to Kafka\")\n\n    df.toJSON.foreachPartition((partisions: Iterator[String]) => {\n      val producer: KafkaProducer[String, String] = new KafkaProducer[String, String](props)\n      partisions.foreach((line: String) => {\n          producer.send(new ProducerRecord[String, String](topic,null,line))\n      })\n    })\n  }\n\n\n\n\n\nSpark Streaming setup\n\n\nSBT dependencies to be set:\n\n\nlibraryDependencies ++= {\n\n  val sparkVer = \"2.0.0\"\n  Seq(\n    \"org.apache.spark\" %% \"spark-streaming\" % sparkVer % \"provided\",\n    \"org.apache.spark\" %% \"spark-streaming-kafka-0-8\" % sparkVer % \"provided\",\n    \"org.apache.spark\" %% \"spark-core\" % sparkVer % \"provided\" withSources(),\n    \"org.apache.spark\" %% \"spark-hive\" % sparkVer % \"provided\"\n  )\n}\n\n\n\n\nStream set up and processing:\n\n\n   // Initialize spark context\n    val conf = new SparkConf().setAppName(\"My Streaming Processor\")\n    val ssc = new StreamingContext(conf, Seconds(30))\n    ssc.sparkContext.setLogLevel(\"ERROR\")\n\n    // Kafka config\n    val kafkaConf = Map(\n    // TODO Maybe this one is all we need\n    \"metadata.broker.list\" -> \"localhost:9092\",\n    )\n\n    // Create a stream of Array[Byte] as key and as payload\n    val stream = KafkaUtils.createDirectStream[Array[Byte], Array[Byte], DefaultDecoder, DefaultDecoder](\n    ssc,\n    kafkaConf,\n    Set(\"myTopic\")\n    )\n\n    // Process each batch of data in another function\n    stream.foreachRDD { rdd => processRdd(rdd,config)}\n\n    ssc.start()\n    ssc.awaitTermination()\n\n\n\n\nWrite a compressed DataFrame\n\n\n  val spark = SparkSession.builder.config(rdd.sparkContext.getConf).getOrCreate()\n  spark.sqlContext.setConf(\"spark.sql.parquet.compression.codec\", \"snappy\")\n\n  // Create the DF and add the partition columns\n  val targetDF = spark.sqlContext.createDataFrame(rowData, addPartitions(myTableSchema,partitionsArray))\n\n  // Write to Parquet\n  val parquetPath = \"/user/victor/mytable\"\n  targetDF.write.mode(\"append\").partitionBy(partitions : _*).parquet(parquetPath)\n\n\n\n\n\nAdd dynamic partitions to a DataFrame\n\n\nAdds dynamic partitions to an existing schema, so they can be given by configuration\n\n\n  def addPartitions(schema: StructType, partitions: Array[String]) : StructType = {\n    var array = new ArrayBuffer[StructField]()\n\n    // Add previous fields\n    schema.foreach(f => array += f)\n\n    // Add new partition fields\n    partitions.foreach(p => array += new StructField(p,StringType))\n\n    new StructType(array.toArray)\n  }\n\n  val myTableSchema = StructType(Array(StructField(\"mytimestamp\", StringType, true),\n    StructField(\"key\", StringType, true),\n    StructField(\"value\", DoubleType, true)))",
-            "title": "Spark"
+            "title": "DataFrames"
         },
         {
             "location": "/spark/spark/#read-and-write-fromto-csv",
@@ -174,6 +194,16 @@
             "location": "/spark/spark/#add-dynamic-partitions-to-a-dataframe",
             "text": "Adds dynamic partitions to an existing schema, so they can be given by configuration    def addPartitions(schema: StructType, partitions: Array[String]) : StructType = {\n    var array = new ArrayBuffer[StructField]()\n\n    // Add previous fields\n    schema.foreach(f => array += f)\n\n    // Add new partition fields\n    partitions.foreach(p => array += new StructField(p,StringType))\n\n    new StructType(array.toArray)\n  }\n\n  val myTableSchema = StructType(Array(StructField(\"mytimestamp\", StringType, true),\n    StructField(\"key\", StringType, true),\n    StructField(\"value\", DoubleType, true)))",
             "title": "Add dynamic partitions to a DataFrame"
+        },
+        {
+            "location": "/spark/structured_streaming/",
+            "text": "Structured Streaming Example\n\n\nProducer process used for testing\n\n\nnetstat -c | grep tcp | kafka-console-producer --topic topic2345 --broker-list [KAFKA HOST]:9092\n\n\n\n\nLibraries and command line hacks used:\n\n\nexport SPARK_KAFKA_VERSION=0.10\n\n\n\n\n(see \nthis\n)\n\n\nSBT dependencies\n\n\nlibraryDependencies ++= {\n\n  val sparkVer = \"2.1.0\"\n  Seq(\n    \"org.apache.spark\" %% \"spark-core\" % sparkVer % \"provided\" withSources(),\n    \"org.apache.spark\" %% \"spark-streaming\" % sparkVer % \"provided\",\n    \"org.apache.spark\" %% \"spark-sql\" % sparkVer % \"provided\",\n    \"org.apache.spark\" % \"spark-sql-kafka-0-10_2.11\" % sparkVer,\n    \"org.apache.kafka\" % \"kafka-clients\" % \"0.10.0.1\"\n  )\n}\n\n\n\n\nSpark Submit command\n\n\nexport SPARK_KAFKA_VERSION=0.10 && spark2-submit  --class com.ericsson.streaming.structured.StructuredStreamingMain --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.1.0,org.apache.kafka:kafka-clients:0.10.0.1 sparkstructuredstreamingconsumer_2.11-0.1.jar topic2345 172.29.45.149:9092 WARN\n\n\n\n\nGitHub Book on Spark Structured Streaming",
+            "title": "Structured Streaming"
+        },
+        {
+            "location": "/spark/structured_streaming/#structured-streaming-example",
+            "text": "Producer process used for testing  netstat -c | grep tcp | kafka-console-producer --topic topic2345 --broker-list [KAFKA HOST]:9092  Libraries and command line hacks used:  export SPARK_KAFKA_VERSION=0.10  (see  this )  SBT dependencies  libraryDependencies ++= {\n\n  val sparkVer = \"2.1.0\"\n  Seq(\n    \"org.apache.spark\" %% \"spark-core\" % sparkVer % \"provided\" withSources(),\n    \"org.apache.spark\" %% \"spark-streaming\" % sparkVer % \"provided\",\n    \"org.apache.spark\" %% \"spark-sql\" % sparkVer % \"provided\",\n    \"org.apache.spark\" % \"spark-sql-kafka-0-10_2.11\" % sparkVer,\n    \"org.apache.kafka\" % \"kafka-clients\" % \"0.10.0.1\"\n  )\n}  Spark Submit command  export SPARK_KAFKA_VERSION=0.10 && spark2-submit  --class com.ericsson.streaming.structured.StructuredStreamingMain --packages org.apache.spark:spark-sql-kafka-0-10_2.11:2.1.0,org.apache.kafka:kafka-clients:0.10.0.1 sparkstructuredstreamingconsumer_2.11-0.1.jar topic2345 172.29.45.149:9092 WARN  GitHub Book on Spark Structured Streaming",
+            "title": "Structured Streaming Example"
         }
     ]
 }

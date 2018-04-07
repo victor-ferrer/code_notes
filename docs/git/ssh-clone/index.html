@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>File/URL/HDFS Properties - Victor Code Notes</title>
+  <title>SSH Usage - Victor Code Notes</title>
   
 
   <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -20,7 +20,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "File/URL/HDFS Properties";
+    var mkdocs_page_name = "SSH Usage";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -103,8 +103,15 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../../git/ssh-clone/">SSH Usage</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">SSH Usage</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#clone-a-repo-using-a-ssh-private-key">Clone a repo using a SSH private key</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -119,28 +126,21 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../crypto/">Cryptography</a>
+        <a class="" href="../../java/crypto/">Cryptography</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../jvm/">JVM</a>
+        <a class="" href="../../java/jvm/">JVM</a>
         
     </li>
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">File/URL/HDFS Properties</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#load-a-javautilproperties-from-fileurlhdfs">Load a java.util.properties from File/URL/HDFS</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../../java/properties/">File/URL/HDFS Properties</a>
         
     </li>
 
@@ -260,11 +260,11 @@
     
       
         
-          <li>Java &raquo;</li>
+          <li>Git &raquo;</li>
         
       
     
-    <li>File/URL/HDFS Properties</li>
+    <li>SSH Usage</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -274,58 +274,12 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="load-a-javautilproperties-from-fileurlhdfs">Load a java.util.properties from File/URL/HDFS</h1>
-<pre><code>/**
-* Utility class that provides logic for reading Properties objects from several locations:
-* - URL (HTTP/S)
-* - File
-* - HDFS 
-*/
-public class PropertiesReader {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(PropertiesReader.class);
-
-    private static final String HTTP_RESOURCE_REGEX = &quot;(http[s]?://.*[:[0-9]+]?/.*)&quot;;
-
-    /**
-     * Gets an InputStream from either a File, URL or HDFS
-    public static InputStream getFileInputStream(String path) throws IOException 
-    {
-        // Try with an HTTP(S) resource
-        Pattern httpPat = Pattern.compile(HTTP_RESOURCE_REGEX);
-        Matcher httpMatcher = httpPat.matcher(path);
-
-        if (httpMatcher.matches()){
-            return getHTTPInputStream(httpMatcher.group());
-        }
-
-        // TODO Copy HDFS block
-
-        // Now try with a regular file
-        return new FileInputStream(path);
-    }
-
-    /**
-     * @param path String representing the location of the properties file. Can be HDFS, URL or local file
-     *  @return the loaded Properties object
-     *  @throws URISyntaxException 
-     * @throws IOException 
-     */
-    public static Properties getProperties(String path) throws IOException
-    {
-        // Try with an HDFS resource
-        Properties toReturn = new Properties();
-        toReturn.load(getFileInputStream(path));
-
-        return toReturn;
-    }
-
-    private static InputStream getHTTPInputStream(String path) throws IOException {
-        LOGGER.info(String.format(&quot;Trying to open URL at &quot; + path));
-        return new URL(path);
-    }
-}
+                <h1 id="clone-a-repo-using-a-ssh-private-key">Clone a repo using a SSH private key</h1>
+<p>To clone a repo using a previously registred SSH key</p>
+<pre><code>ssh-agent bash -c 'ssh-add /somewhere/yourkey; git clone git@github.com:user/project.git'
 </code></pre>
+
+<p>See this <a href="https://stackoverflow.com/questions/4565700/specify-private-ssh-key-to-use-when-executing-shell-command">StackOverflow question</a></p>
               
             </div>
           </div>
@@ -333,10 +287,10 @@ public class PropertiesReader {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../scala/cheatsheets/" class="btn btn-neutral float-right" title="Cheatsheets"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../java/crypto/" class="btn btn-neutral float-right" title="Cryptography"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../jvm/" class="btn btn-neutral" title="JVM"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../docker/" class="btn btn-neutral" title="Docker"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -362,10 +316,10 @@ public class PropertiesReader {
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../jvm/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../docker/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../scala/cheatsheets/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../java/crypto/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
