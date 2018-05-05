@@ -4,7 +4,7 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2018-04-07</lastmod>
+     <lastmod>2018-05-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,7 +13,7 @@
         
     <url>
      <loc>None/bash/</loc>
-     <lastmod>2018-04-07</lastmod>
+     <lastmod>2018-05-05</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -24,8 +24,8 @@
     </url>
         
     <url>
-     <loc>None/docker/</loc>
-     <lastmod>2018-04-07</lastmod>
+     <loc>None</loc>
+     <lastmod></lastmod>
      <changefreq>daily</changefreq>
     </url>
         
