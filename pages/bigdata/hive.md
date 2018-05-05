@@ -1,3 +1,6 @@
+## Hive DDL Manual
+https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL
+
 ## Hive tables over Snappy Parquet
 
 Useful script for creating partitioned, snappy-based, Hive tables.

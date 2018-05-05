@@ -8,7 +8,9 @@ pages:
     - Big Data:
       - 'Hive': bigdata/hive.md
       - 'Parquet' : bigdata/parquet.md
-    - Docker: docker.md     
+    - Docker:
+       - 'Cloudera Quickstart' : docker/cloudera.md     
+       - 'SQL Server' : docker/sqlserver.md
     - Git:
        - 'SSH Usage' : git/ssh-clone.md
     - Java: 
