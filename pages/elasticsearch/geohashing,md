@@ -1,0 +1,24 @@
+# Index creation
+
+PUT http://172.29.57.58:9200/my_locations2
+```
+{
+    "mappings": {
+        "location": {
+            "properties": {
+                "pin": {
+                    "properties": {
+                        "location": {
+                            "type": "geo_point",
+							"geohash" : "true",
+                            // "geohash_prefix" : "true",
+                            // "geohash_precision" : 10
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
