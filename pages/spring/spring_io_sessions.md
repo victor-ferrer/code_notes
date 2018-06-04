@@ -51,7 +51,7 @@ https://t.co/pfYSmrcxjc
 - Under the hood of reactive data access
 https://t.co/fEguXWR15s
 
-#Workshops
+# Workshops
 
 - Reactive programming with Netty API
 TODO
