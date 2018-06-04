@@ -121,6 +121,21 @@
         
             
     <ul class="subnav">
+    <li><span>ElasticSearch</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../elasticsearch/geohashing/">Geographical</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>Git</span></li>
 
         
@@ -177,6 +192,13 @@
         
             
     <li class="toctree-l1 ">
+        <a class="" href="../../scala/parallel/">Parallel Collections</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
         <a class="" href="../../scala/json/">Parse a JSON</a>
         
     </li>
@@ -221,6 +243,13 @@
             
     <li class="toctree-l1 ">
         <a class="" href="../../spring/security/">Security</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../spring/spring_io_sessions/">Spring IO 2018</a>
         
     </li>
 
@@ -290,10 +319,9 @@
             <div class="section">
               
                 <h1 id="sql-server-on-docker">SQL Server on Docker</h1>
-<p>General Instructions:
-https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker</p>
-<p>How to solve "2017-GA: The transaction log for database 'master' is full due to 'NOTHING'. #180" error:
-https://github.com/Microsoft/mssql-docker/issues/180#issuecomment-371965952</p>
+<p><a href="https://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker">General Instructions</a></p>
+<p>Related StackOverflow question: <a href="https://github.com/Microsoft/mssql-docker/issues/180#issuecomment-371965952">How to solve "2017-GA: The transaction log for database 'master' is full due to 'NOTHING'. #180" error</a></p>
+<p>Command to run the container:</p>
 <pre><code>sudo docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=&lt;YourStrong!Passw0rd&gt;' \
                 -p 1401:1433 --name sql1 -v /data/ms-sql-docker-data:/var/opt/mssql \
                  -d microsoft/mssql-server-linux:2017-latest
@@ -305,7 +333,7 @@ https://github.com/Microsoft/mssql-docker/issues/180#issuecomment-371965952</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../git/ssh-clone/" class="btn btn-neutral float-right" title="SSH Usage"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../elasticsearch/geohashing/" class="btn btn-neutral float-right" title="Geographical"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../cloudera/" class="btn btn-neutral" title="Cloudera Quickstart"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -337,7 +365,7 @@ https://github.com/Microsoft/mssql-docker/issues/180#issuecomment-371965952</p>
         <span><a href="../cloudera/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../../git/ssh-clone/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../elasticsearch/geohashing/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

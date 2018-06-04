@@ -1,5 +1,8 @@
 ## Parallel collections
 
+Code creating and using a parallel collection:
+
+```
 scala>  import scala.collection.parallel._
 import scala.collection.parallel._
 
@@ -11,3 +14,4 @@ warning: there was one deprecation warning (since 2.12.0); for details, enable `
 pc.tasksupport: scala.collection.parallel.TaskSupport = scala.collection.parallel.ForkJoinTaskSupport@59bdcf98
 
 scala> pc map { _ + 1 }
+```

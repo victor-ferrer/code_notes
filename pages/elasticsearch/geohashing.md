@@ -1,13 +1,15 @@
 # Docker commands for creating the environment
+```
 $ docker pull elasticsearch
 $ docker pull kibana
 $ docker run -p 9200:9200 -p 9300:9300 -d elasticsearch
 $ docker run -p 5601:5601 -d kibana -e http://[ES CONTAINER IP]:9200
+```
 
 # Index creation
-PUT http://[ES CONTAINER IP]:9200/my_locations2
 
 ```
+PUT http://[ES CONTAINER IP]:9200/my_locations2
 {
     "mappings": {
         "location": {
@@ -66,7 +68,7 @@ curl -X GET "localhost:9200/_search" -H 'Content-Type: application/json' -d'
         }
     }
 }
-'```
+```
 
 # Bulk inserting
 
@@ -98,5 +100,7 @@ object GeoLoader {
         .header("content-type", "application/json")
         .postData(bulkPuts.mkString("\n")).asString)
   }
+}
+
 ```
 

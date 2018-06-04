@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Cheatsheets - Victor Code Notes</title>
+  <title>Parallel Collections - Victor Code Notes</title>
   
 
   <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -20,7 +20,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Cheatsheets";
+    var mkdocs_page_name = "Parallel Collections";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -177,22 +177,22 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Cheatsheets</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#scala-cheatsheets-and-job-questions">Scala cheatsheets and job questions</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../cheatsheets/">Cheatsheets</a>
         
     </li>
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../parallel/">Parallel Collections</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Parallel Collections</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#parallel-collections">Parallel collections</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -308,7 +308,7 @@
         
       
     
-    <li>Cheatsheets</li>
+    <li>Parallel Collections</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -318,11 +318,20 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="scala-cheatsheets-and-job-questions">Scala cheatsheets and job questions</h1>
-<ul>
-<li><a href="https://www.journaldev.com/8958/scala-interview-questions-answers">Journal Dev Scala Interview Questions</a></li>
-<li><a href="https://github.com/Jarlakxen/Scala-Interview-Questions">Scala Interview Questions - Github</a></li>
-</ul>
+                <h2 id="parallel-collections">Parallel collections</h2>
+<p>Code creating and using a parallel collection:</p>
+<pre><code>scala&gt;  import scala.collection.parallel._
+import scala.collection.parallel._
+
+scala&gt;  val pc = mutable.ParArray(1, 2, 3)
+pc: scala.collection.parallel.mutable.ParArray[Int] = ParArray(1, 2, 3)
+
+scala&gt; pc.tasksupport = new ForkJoinTaskSupport(new scala.concurrent.forkjoin.ForkJoinPool(2))
+warning: there was one deprecation warning (since 2.12.0); for details, enable `:setting -deprecation' or `:replay -deprecation'
+pc.tasksupport: scala.collection.parallel.TaskSupport = scala.collection.parallel.ForkJoinTaskSupport@59bdcf98
+
+scala&gt; pc map { _ + 1 }
+</code></pre>
               
             </div>
           </div>
@@ -330,10 +339,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../parallel/" class="btn btn-neutral float-right" title="Parallel Collections"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../json/" class="btn btn-neutral float-right" title="Parse a JSON"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../java/properties/" class="btn btn-neutral" title="File/URL/HDFS Properties"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../cheatsheets/" class="btn btn-neutral" title="Cheatsheets"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -359,10 +368,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../java/properties/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../cheatsheets/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../parallel/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../json/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

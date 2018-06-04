@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Cheatsheets - Victor Code Notes</title>
+  <title>Geographical - Victor Code Notes</title>
   
 
   <link rel="shortcut icon" href="../../img/favicon.ico">
@@ -20,7 +20,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Cheatsheets";
+    var mkdocs_page_name = "Geographical";
   </script>
   
   <script src="../../js/jquery-2.1.1.min.js"></script>
@@ -118,8 +118,27 @@
 
         
             
-    <li class="toctree-l1 ">
-        <a class="" href="../../elasticsearch/geohashing/">Geographical</a>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Geographical</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#docker-commands-for-creating-the-environment">Docker commands for creating the environment</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#index-creation">Index creation</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#post-for-inserting-data">Post for inserting data</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#query-with-geo-bounding-box">Query with geo bounding box</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#bulk-inserting">Bulk inserting</a></li>
+                
+            
+            </ul>
         
     </li>
 
@@ -177,29 +196,22 @@
 
         
             
-    <li class="toctree-l1 current">
-        <a class="current" href="./">Cheatsheets</a>
-        
-            <ul>
-            
-                <li class="toctree-l3"><a href="#scala-cheatsheets-and-job-questions">Scala cheatsheets and job questions</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l1 ">
+        <a class="" href="../../scala/cheatsheets/">Cheatsheets</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../parallel/">Parallel Collections</a>
+        <a class="" href="../../scala/parallel/">Parallel Collections</a>
         
     </li>
 
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../json/">Parse a JSON</a>
+        <a class="" href="../../scala/json/">Parse a JSON</a>
         
     </li>
 
@@ -304,11 +316,11 @@
     
       
         
-          <li>Scala &raquo;</li>
+          <li>ElasticSearch &raquo;</li>
         
       
     
-    <li>Cheatsheets</li>
+    <li>Geographical</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -318,11 +330,104 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="scala-cheatsheets-and-job-questions">Scala cheatsheets and job questions</h1>
-<ul>
-<li><a href="https://www.journaldev.com/8958/scala-interview-questions-answers">Journal Dev Scala Interview Questions</a></li>
-<li><a href="https://github.com/Jarlakxen/Scala-Interview-Questions">Scala Interview Questions - Github</a></li>
-</ul>
+                <h1 id="docker-commands-for-creating-the-environment">Docker commands for creating the environment</h1>
+<pre><code>$ docker pull elasticsearch
+$ docker pull kibana
+$ docker run -p 9200:9200 -p 9300:9300 -d elasticsearch
+$ docker run -p 5601:5601 -d kibana -e http://[ES CONTAINER IP]:9200
+</code></pre>
+
+<h1 id="index-creation">Index creation</h1>
+<pre><code>PUT http://[ES CONTAINER IP]:9200/my_locations2
+{
+    &quot;mappings&quot;: {
+        &quot;location&quot;: {
+            &quot;properties&quot;: {
+                &quot;pin&quot;: {
+                    &quot;properties&quot;: {
+                        &quot;location&quot;: {
+                            &quot;type&quot;: &quot;geo_point&quot;,
+                            &quot;geohash&quot; : &quot;true&quot;,
+                            // &quot;geohash_prefix&quot; : &quot;true&quot;,
+                            // &quot;geohash_precision&quot; : 10
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<h1 id="post-for-inserting-data">Post for inserting data</h1>
+<pre><code>{
+    &quot;pin&quot; : {
+        &quot;location&quot; : {
+            &quot;lat&quot; : 40.12,
+            &quot;lon&quot; : -71.34
+        }        
+    }
+}
+</code></pre>
+
+<h1 id="query-with-geo-bounding-box">Query with geo bounding box</h1>
+<pre><code>curl -X GET &quot;localhost:9200/_search&quot; -H 'Content-Type: application/json' -d'
+{
+    &quot;query&quot;: {
+        &quot;bool&quot; : {
+            &quot;must&quot; : {
+                &quot;match_all&quot; : {}
+            },
+            &quot;filter&quot; : {
+                &quot;geo_bounding_box&quot; : {
+                    &quot;pin.location&quot; : {
+                        &quot;top_left&quot; : {
+                            &quot;lat&quot; : 30.29356,
+                            &quot;lon&quot; : -82.085741
+                        },
+                        &quot;bottom_right&quot; : {
+                            &quot;lat&quot; : 29.661059,
+                            &quot;lon&quot; : -81.658345
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<h1 id="bulk-inserting">Bulk inserting</h1>
+<pre><code>object GeoLoader {
+
+  // Sample data
+  // https://support.spatialkey.com/spatialkey-sample-csv-data/
+  // Relevant fields from the CSV file
+  val POLICY_ID = 0
+  val TOTAL_INVESTED = 8
+  val LATITUDE = 13
+  val LONGITUDE = 14
+
+  def main(args: Array[String]) {
+
+    val filename = args[0]
+    val elkIP = args[1]
+    println(s&quot;About to send the file ${filename} to ELK@${elkIP}&quot;)
+
+    val lines = Source.fromFile(filename).getLines().drop(1)
+    val payload = lines.map(_.split(&quot;,&quot;)).map(x =&gt; (x(POLICY_ID),x(TOTAL_INVESTED),x(LATITUDE).toFloat,x(LONGITUDE).toFloat))
+
+    val bulkPuts = payload.flatMap(x =&gt; Seq(s&quot;&quot;&quot;{ &quot;create&quot; : { &quot;_index&quot; : &quot;my_locations2&quot;, &quot;_type&quot; : &quot;location&quot; , &quot;_id&quot; : &quot;${x._1}&quot;} }&quot;&quot;&quot;,
+          s&quot;&quot;&quot;{&quot;pin&quot; : { &quot;location&quot; : { &quot;lat&quot; : ${x._3}, &quot;lon&quot; : ${x._4} }, &quot;key&quot; : &quot;${x._1}&quot;, &quot;tiv&quot; : ${x._2}}}&quot;&quot;&quot;))
+
+    println(Http(s&quot;http://${elkIP}:9200/_bulk&quot;)
+        .timeout(connTimeoutMs = 1000, readTimeoutMs = 60000)
+        .header(&quot;content-type&quot;, &quot;application/json&quot;)
+        .postData(bulkPuts.mkString(&quot;\n&quot;)).asString)
+  }
+}
+
+</code></pre>
               
             </div>
           </div>
@@ -330,10 +435,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../parallel/" class="btn btn-neutral float-right" title="Parallel Collections"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../../git/ssh-clone/" class="btn btn-neutral float-right" title="SSH Usage"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../java/properties/" class="btn btn-neutral" title="File/URL/HDFS Properties"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../docker/sqlserver/" class="btn btn-neutral" title="SQL Server"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -359,10 +464,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../java/properties/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../docker/sqlserver/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../parallel/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../../git/ssh-clone/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

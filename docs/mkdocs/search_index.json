@@ -22,12 +22,12 @@
         },
         {
             "location": "/bigdata/hive/",
-            "text": "Hive DDL Manual\n\n\nhttps://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL\n\n\nHive tables over Snappy Parquet\n\n\nUseful script for creating partitioned, snappy-based, Hive tables.\n\n\ndrop table mytable;\n\nCREATE EXTERNAL TABLE `mytable`(\n      `mytimestamp` string, \n      `key` string,       \n      `value` double, \n    PARTITIONED BY ( \n      `year` int, \n      `month` int, \n      `day` int)\n  STORED AS PARQUET TBLPROPERTIES (\"parquet.compression\"=\"SNAPPY\");\n\nalter table mytable set location 'hdfs://[HDFS_HOST]:8020/user/victor/mytable';\n\nmsck repair table mytable;\n\nselect * from mytable limit 100;\n\n\n\n\nNotes\n\n\n\n\nData should be stored in Snappy Parquet files and respecting the defined partitioning\n\n\nSee \nthis example\n, where a DataFrame writes compressed data.",
+            "text": "Hive DDL Manual\n\n\nLink\n\n\nHive tables over Snappy Parquet\n\n\nUseful script for creating partitioned, snappy-based, Hive tables.\n\n\ndrop table mytable;\n\nCREATE EXTERNAL TABLE `mytable`(\n      `mytimestamp` string, \n      `key` string,       \n      `value` double, \n    PARTITIONED BY ( \n      `year` int, \n      `month` int, \n      `day` int)\n  STORED AS PARQUET TBLPROPERTIES (\"parquet.compression\"=\"SNAPPY\");\n\nalter table mytable set location 'hdfs://[HDFS_HOST]:8020/user/victor/mytable';\n\nmsck repair table mytable;\n\nselect * from mytable limit 100;\n\n\n\n\nNotes\n\n\n\n\nData should be stored in Snappy Parquet files and respecting the defined partitioning\n\n\nSee \nthis example\n, where a DataFrame writes compressed data.",
             "title": "Hive"
         },
         {
             "location": "/bigdata/hive/#hive-ddl-manual",
-            "text": "https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL",
+            "text": "Link",
             "title": "Hive DDL Manual"
         },
         {
@@ -57,13 +57,43 @@
         },
         {
             "location": "/docker/sqlserver/",
-            "text": "SQL Server on Docker\n\n\nGeneral Instructions:\nhttps://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker\n\n\nHow to solve \"2017-GA: The transaction log for database 'master' is full due to 'NOTHING'. #180\" error:\nhttps://github.com/Microsoft/mssql-docker/issues/180#issuecomment-371965952\n\n\nsudo docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=<YourStrong!Passw0rd>' \\\n                -p 1401:1433 --name sql1 -v /data/ms-sql-docker-data:/var/opt/mssql \\\n                 -d microsoft/mssql-server-linux:2017-latest",
+            "text": "SQL Server on Docker\n\n\nGeneral Instructions\n\n\nRelated StackOverflow question: \nHow to solve \"2017-GA: The transaction log for database 'master' is full due to 'NOTHING'. #180\" error\n\n\nCommand to run the container:\n\n\nsudo docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=<YourStrong!Passw0rd>' \\\n                -p 1401:1433 --name sql1 -v /data/ms-sql-docker-data:/var/opt/mssql \\\n                 -d microsoft/mssql-server-linux:2017-latest",
             "title": "SQL Server"
         },
         {
             "location": "/docker/sqlserver/#sql-server-on-docker",
-            "text": "General Instructions:\nhttps://docs.microsoft.com/en-us/sql/linux/quickstart-install-connect-docker  How to solve \"2017-GA: The transaction log for database 'master' is full due to 'NOTHING'. #180\" error:\nhttps://github.com/Microsoft/mssql-docker/issues/180#issuecomment-371965952  sudo docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=<YourStrong!Passw0rd>' \\\n                -p 1401:1433 --name sql1 -v /data/ms-sql-docker-data:/var/opt/mssql \\\n                 -d microsoft/mssql-server-linux:2017-latest",
+            "text": "General Instructions  Related StackOverflow question:  How to solve \"2017-GA: The transaction log for database 'master' is full due to 'NOTHING'. #180\" error  Command to run the container:  sudo docker run -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD=<YourStrong!Passw0rd>' \\\n                -p 1401:1433 --name sql1 -v /data/ms-sql-docker-data:/var/opt/mssql \\\n                 -d microsoft/mssql-server-linux:2017-latest",
             "title": "SQL Server on Docker"
+        },
+        {
+            "location": "/elasticsearch/geohashing/",
+            "text": "Docker commands for creating the environment\n\n\n$ docker pull elasticsearch\n$ docker pull kibana\n$ docker run -p 9200:9200 -p 9300:9300 -d elasticsearch\n$ docker run -p 5601:5601 -d kibana -e http://[ES CONTAINER IP]:9200\n\n\n\n\nIndex creation\n\n\nPUT http://[ES CONTAINER IP]:9200/my_locations2\n{\n    \"mappings\": {\n        \"location\": {\n            \"properties\": {\n                \"pin\": {\n                    \"properties\": {\n                        \"location\": {\n                            \"type\": \"geo_point\",\n                            \"geohash\" : \"true\",\n                            // \"geohash_prefix\" : \"true\",\n                            // \"geohash_precision\" : 10\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n\n\n\n\nPost for inserting data\n\n\n{\n    \"pin\" : {\n        \"location\" : {\n            \"lat\" : 40.12,\n            \"lon\" : -71.34\n        }        \n    }\n}\n\n\n\n\nQuery with geo bounding box\n\n\ncurl -X GET \"localhost:9200/_search\" -H 'Content-Type: application/json' -d'\n{\n    \"query\": {\n        \"bool\" : {\n            \"must\" : {\n                \"match_all\" : {}\n            },\n            \"filter\" : {\n                \"geo_bounding_box\" : {\n                    \"pin.location\" : {\n                        \"top_left\" : {\n                            \"lat\" : 30.29356,\n                            \"lon\" : -82.085741\n                        },\n                        \"bottom_right\" : {\n                            \"lat\" : 29.661059,\n                            \"lon\" : -81.658345\n                        }\n                    }\n                }\n            }\n        }\n    }\n}\n\n\n\n\nBulk inserting\n\n\nobject GeoLoader {\n\n  // Sample data\n  // https://support.spatialkey.com/spatialkey-sample-csv-data/\n  // Relevant fields from the CSV file\n  val POLICY_ID = 0\n  val TOTAL_INVESTED = 8\n  val LATITUDE = 13\n  val LONGITUDE = 14\n\n  def main(args: Array[String]) {\n\n    val filename = args[0]\n    val elkIP = args[1]\n    println(s\"About to send the file ${filename} to ELK@${elkIP}\")\n\n    val lines = Source.fromFile(filename).getLines().drop(1)\n    val payload = lines.map(_.split(\",\")).map(x => (x(POLICY_ID),x(TOTAL_INVESTED),x(LATITUDE).toFloat,x(LONGITUDE).toFloat))\n\n    val bulkPuts = payload.flatMap(x => Seq(s\"\"\"{ \"create\" : { \"_index\" : \"my_locations2\", \"_type\" : \"location\" , \"_id\" : \"${x._1}\"} }\"\"\",\n          s\"\"\"{\"pin\" : { \"location\" : { \"lat\" : ${x._3}, \"lon\" : ${x._4} }, \"key\" : \"${x._1}\", \"tiv\" : ${x._2}}}\"\"\"))\n\n    println(Http(s\"http://${elkIP}:9200/_bulk\")\n        .timeout(connTimeoutMs = 1000, readTimeoutMs = 60000)\n        .header(\"content-type\", \"application/json\")\n        .postData(bulkPuts.mkString(\"\\n\")).asString)\n  }\n}",
+            "title": "Geographical"
+        },
+        {
+            "location": "/elasticsearch/geohashing/#docker-commands-for-creating-the-environment",
+            "text": "$ docker pull elasticsearch\n$ docker pull kibana\n$ docker run -p 9200:9200 -p 9300:9300 -d elasticsearch\n$ docker run -p 5601:5601 -d kibana -e http://[ES CONTAINER IP]:9200",
+            "title": "Docker commands for creating the environment"
+        },
+        {
+            "location": "/elasticsearch/geohashing/#index-creation",
+            "text": "PUT http://[ES CONTAINER IP]:9200/my_locations2\n{\n    \"mappings\": {\n        \"location\": {\n            \"properties\": {\n                \"pin\": {\n                    \"properties\": {\n                        \"location\": {\n                            \"type\": \"geo_point\",\n                            \"geohash\" : \"true\",\n                            // \"geohash_prefix\" : \"true\",\n                            // \"geohash_precision\" : 10\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+            "title": "Index creation"
+        },
+        {
+            "location": "/elasticsearch/geohashing/#post-for-inserting-data",
+            "text": "{\n    \"pin\" : {\n        \"location\" : {\n            \"lat\" : 40.12,\n            \"lon\" : -71.34\n        }        \n    }\n}",
+            "title": "Post for inserting data"
+        },
+        {
+            "location": "/elasticsearch/geohashing/#query-with-geo-bounding-box",
+            "text": "curl -X GET \"localhost:9200/_search\" -H 'Content-Type: application/json' -d'\n{\n    \"query\": {\n        \"bool\" : {\n            \"must\" : {\n                \"match_all\" : {}\n            },\n            \"filter\" : {\n                \"geo_bounding_box\" : {\n                    \"pin.location\" : {\n                        \"top_left\" : {\n                            \"lat\" : 30.29356,\n                            \"lon\" : -82.085741\n                        },\n                        \"bottom_right\" : {\n                            \"lat\" : 29.661059,\n                            \"lon\" : -81.658345\n                        }\n                    }\n                }\n            }\n        }\n    }\n}",
+            "title": "Query with geo bounding box"
+        },
+        {
+            "location": "/elasticsearch/geohashing/#bulk-inserting",
+            "text": "object GeoLoader {\n\n  // Sample data\n  // https://support.spatialkey.com/spatialkey-sample-csv-data/\n  // Relevant fields from the CSV file\n  val POLICY_ID = 0\n  val TOTAL_INVESTED = 8\n  val LATITUDE = 13\n  val LONGITUDE = 14\n\n  def main(args: Array[String]) {\n\n    val filename = args[0]\n    val elkIP = args[1]\n    println(s\"About to send the file ${filename} to ELK@${elkIP}\")\n\n    val lines = Source.fromFile(filename).getLines().drop(1)\n    val payload = lines.map(_.split(\",\")).map(x => (x(POLICY_ID),x(TOTAL_INVESTED),x(LATITUDE).toFloat,x(LONGITUDE).toFloat))\n\n    val bulkPuts = payload.flatMap(x => Seq(s\"\"\"{ \"create\" : { \"_index\" : \"my_locations2\", \"_type\" : \"location\" , \"_id\" : \"${x._1}\"} }\"\"\",\n          s\"\"\"{\"pin\" : { \"location\" : { \"lat\" : ${x._3}, \"lon\" : ${x._4} }, \"key\" : \"${x._1}\", \"tiv\" : ${x._2}}}\"\"\"))\n\n    println(Http(s\"http://${elkIP}:9200/_bulk\")\n        .timeout(connTimeoutMs = 1000, readTimeoutMs = 60000)\n        .header(\"content-type\", \"application/json\")\n        .postData(bulkPuts.mkString(\"\\n\")).asString)\n  }\n}",
+            "title": "Bulk inserting"
         },
         {
             "location": "/git/ssh-clone/",
@@ -119,6 +149,16 @@
             "location": "/scala/cheatsheets/#scala-cheatsheets-and-job-questions",
             "text": "Journal Dev Scala Interview Questions  Scala Interview Questions - Github",
             "title": "Scala cheatsheets and job questions"
+        },
+        {
+            "location": "/scala/parallel/",
+            "text": "Parallel collections\n\n\nCode creating and using a parallel collection:\n\n\nscala>  import scala.collection.parallel._\nimport scala.collection.parallel._\n\nscala>  val pc = mutable.ParArray(1, 2, 3)\npc: scala.collection.parallel.mutable.ParArray[Int] = ParArray(1, 2, 3)\n\nscala> pc.tasksupport = new ForkJoinTaskSupport(new scala.concurrent.forkjoin.ForkJoinPool(2))\nwarning: there was one deprecation warning (since 2.12.0); for details, enable `:setting -deprecation' or `:replay -deprecation'\npc.tasksupport: scala.collection.parallel.TaskSupport = scala.collection.parallel.ForkJoinTaskSupport@59bdcf98\n\nscala> pc map { _ + 1 }",
+            "title": "Parallel Collections"
+        },
+        {
+            "location": "/scala/parallel/#parallel-collections",
+            "text": "Code creating and using a parallel collection:  scala>  import scala.collection.parallel._\nimport scala.collection.parallel._\n\nscala>  val pc = mutable.ParArray(1, 2, 3)\npc: scala.collection.parallel.mutable.ParArray[Int] = ParArray(1, 2, 3)\n\nscala> pc.tasksupport = new ForkJoinTaskSupport(new scala.concurrent.forkjoin.ForkJoinPool(2))\nwarning: there was one deprecation warning (since 2.12.0); for details, enable `:setting -deprecation' or `:replay -deprecation'\npc.tasksupport: scala.collection.parallel.TaskSupport = scala.collection.parallel.ForkJoinTaskSupport@59bdcf98\n\nscala> pc map { _ + 1 }",
+            "title": "Parallel collections"
         },
         {
             "location": "/scala/json/",
@@ -179,6 +219,26 @@
             "location": "/spring/security/#simple-set-up-with-spring-security-and-spring-boot",
             "text": "Simple in-memory authentication with special rules for several endopoints (local only)  @Configuration\npublic class SecurityConfig extends WebSecurityConfigurerAdapter {\n\n    ...\n\n    @Autowired\n    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {\n        auth\n            .inMemoryAuthentication()\n            .withUser(\"user\").password(user_password).roles(\"USER\")\n        .and()\n            .withUser(\"admin\").password(admin_password).authorities(\"ADMIN\");\n    }\n\n    @Override\n    protected void configure(HttpSecurity http) throws Exception {\n        http\n            .csrf()\n            .disable()\n            .httpBasic()\n         .and()\n            .authorizeRequests()\n            .antMatchers(\"/admin/config/decrypt\").access(\"hasIpAddress('127.0.0.1/32') and hasAuthority('ADMIN')\")\n            .antMatchers(\"/admin/config/encrypt\").access(\"hasIpAddress('127.0.0.1/32') and hasAuthority('ADMIN')\")\n            .antMatchers(\"/admin/config/**\").authenticated()\n            .antMatchers(\"/**\").permitAll()\n        ;\n    }\n}  To use IPV4 instead of IPV6 use this:  -Djava.net.preferIPv4Stack=true",
             "title": "Simple set up with Spring Security and Spring Boot"
+        },
+        {
+            "location": "/spring/spring_io_sessions/",
+            "text": "Spring IO 2018 Sessions and Workshops\n\n\nSessions\n\n\n\n\n\n\nContinous deployment of your application\n\n\n\n\n\n\nDDD with Spring\n\n\n\n\n\n\nDEVX with Cloud Foundry and Kubernetes\n\n\n\n\n\n\nFlight of the Flux: Reactor execution model\n\n\n\n\n\n\nMachine learning exposed\n\n\n\n\n\n\nMicrometer: New Insights into your Spring Boot Application\n\n\n\n\n\n\nObservability with Spring-based distributed systems\n\n\n\n\n\n\nREST beyond the obvious\n\n\n\n\n\n\nServerless Spring\n\n\n\n\n\n\nSpring Cloud Apps on AWS\n\n\n\n\n\n\nSpring Cloud Gateway\n\n\n\n\n\n\nSpring Kafka\n\n\n\n\n\n\nSpring Session 2: \nSlides\n & \nCode\n\n\n\n\n\n\nTesting your Message-Driven application with Spring\n\n\n\n\n\n\nTime to Graph Up with Spring Data Neo4J\n\n\n\n\n\n\nUnder the hood of reactive data access\n\n\n\n\n\n\nWorkshops\n\n\n\n\n\n\nReactive programming with Netty API\n\n\n\n\n\n\nSpring 5 Security\n\n\n\n\n\n\nMonitor your Spring Boot Application with Logs, Metrics and Traces: \nCode\n & \nSlides",
+            "title": "Spring IO 2018"
+        },
+        {
+            "location": "/spring/spring_io_sessions/#spring-io-2018-sessions-and-workshops",
+            "text": "",
+            "title": "Spring IO 2018 Sessions and Workshops"
+        },
+        {
+            "location": "/spring/spring_io_sessions/#sessions",
+            "text": "Continous deployment of your application    DDD with Spring    DEVX with Cloud Foundry and Kubernetes    Flight of the Flux: Reactor execution model    Machine learning exposed    Micrometer: New Insights into your Spring Boot Application    Observability with Spring-based distributed systems    REST beyond the obvious    Serverless Spring    Spring Cloud Apps on AWS    Spring Cloud Gateway    Spring Kafka    Spring Session 2:  Slides  &  Code    Testing your Message-Driven application with Spring    Time to Graph Up with Spring Data Neo4J    Under the hood of reactive data access",
+            "title": "Sessions"
+        },
+        {
+            "location": "/spring/spring_io_sessions/#workshops",
+            "text": "Reactive programming with Netty API    Spring 5 Security    Monitor your Spring Boot Application with Logs, Metrics and Traces:  Code  &  Slides",
+            "title": "Workshops"
         },
         {
             "location": "/spark/spark/",

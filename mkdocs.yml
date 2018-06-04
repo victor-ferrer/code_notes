@@ -11,6 +11,8 @@ pages:
     - Docker:
        - 'Cloudera Quickstart' : docker/cloudera.md     
        - 'SQL Server' : docker/sqlserver.md
+    - ElasticSearch:
+       - 'Geographical' : elasticsearch/geohashing.md
     - Git:
        - 'SSH Usage' : git/ssh-clone.md
     - Java: 

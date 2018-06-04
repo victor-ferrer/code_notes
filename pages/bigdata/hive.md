@@ -1,5 +1,5 @@
 ## Hive DDL Manual
-https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL
+[Link](https://cwiki.apache.org/confluence/display/Hive/LanguageManual+DDL)
 
 ## Hive tables over Snappy Parquet
 
