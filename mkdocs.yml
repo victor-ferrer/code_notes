@@ -19,6 +19,7 @@ pages:
        - 'File/URL/HDFS Properties' : java/properties.md
     - Scala: 
        - 'Cheatsheets' : scala/cheatsheets.md
+       - 'Parallel Collections' : scala/parallel.md       
        - 'Parse a JSON' : scala/json.md
     - Spring:
        - 'Cloud' : spring/cloud.md
@@ -26,6 +27,7 @@ pages:
        - 'Batch': spring/batch.md
        - 'Integration': spring/integration.md
        - 'Security': spring/security.md       
+       -  'Spring IO 2018': spring/spring_io_sessions.md
     - Spark: 
        - 'DataFrames' : spark/spark.md
        - 'Structured Streaming' : spark/structured_streaming.md
