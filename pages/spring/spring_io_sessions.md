@@ -4,7 +4,7 @@
 
 - [Continous deployment of your application](https://t.co/23urOBRgoG)
 
-- [DDD with Spring](https://t.co/B5X69H370k)
+- DDD with Spring: [Slides](https://speakerdeck.com/mploed/implementing-ddd-with-the-spring-ecosystem) & [Video](https://youtu.be/a9dF7fnArq0)
 
 - [DEVX with Cloud Foundry and Kubernetes](https://t.co/4LQQjbJZ31)
 

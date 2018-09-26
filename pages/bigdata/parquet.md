@@ -34,7 +34,6 @@ Create the files´ schema:
 ```
 
 *Create the partitions`definition:*
-
 With this JSON:
 ```
 [ {
@@ -51,7 +50,6 @@ With this JSON:
   "type" : "day"
 } ]
 ```
-
 
 And then invoke:
 

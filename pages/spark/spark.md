@@ -134,3 +134,21 @@ Adds dynamic partitions to an existing schema, so they can be given by configura
     StructField("value", DoubleType, true)))   
 
 ```
+
+# Compare two rows within two Dataframes/two Parquet Files
+
+
+```
+    // Read the files
+    val df1 = spark.read.parquet(path1)
+    val df2 = spark.read.parquet(path2)
+
+    // Clean the metadata from the schema
+    val schema_df1 = df1.schema.map(_.copy(metadata = Metadata.empty))
+    val schema_df2 = df2.schema.map(_.copy(metadata = Metadata.empty))
+    println(s"Do schemas match?  ${schema_df1 == schema_df2}")
+
+    // Get a new dataframe with the rows in the second that dont exist in the first
+    val diff = df1.except(df2)
+    println(s"${diff.count()} rows found to be different")
+```
