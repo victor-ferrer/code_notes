@@ -1,0 +1,102 @@
+# Docker commands for creating the environment
+$ docker pull elasticsearch
+$ docker pull kibana
+$ docker run -p 9200:9200 -p 9300:9300 -d elasticsearch
+$ docker run -p 5601:5601 -d kibana -e http://[ES CONTAINER IP]:9200
+
+# Index creation
+PUT http://[ES CONTAINER IP]:9200/my_locations2
+
+```
+{
+    "mappings": {
+        "location": {
+            "properties": {
+                "pin": {
+                    "properties": {
+                        "location": {
+                            "type": "geo_point",
+							"geohash" : "true",
+                            // "geohash_prefix" : "true",
+                            // "geohash_precision" : 10
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+# Post for inserting data
+```
+{
+    "pin" : {
+        "location" : {
+            "lat" : 40.12,
+            "lon" : -71.34
+        }        
+    }
+}
+```
+
+# Query with geo bounding box
+```
+curl -X GET "localhost:9200/_search" -H 'Content-Type: application/json' -d'
+{
+    "query": {
+        "bool" : {
+            "must" : {
+                "match_all" : {}
+            },
+            "filter" : {
+                "geo_bounding_box" : {
+                    "pin.location" : {
+                        "top_left" : {
+                            "lat" : 30.29356,
+                            "lon" : -82.085741
+                        },
+                        "bottom_right" : {
+                            "lat" : 29.661059,
+                            "lon" : -81.658345
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+'```
+
+# Bulk inserting
+
+```
+object GeoLoader {
+
+  // Sample data
+  // https://support.spatialkey.com/spatialkey-sample-csv-data/
+  // Relevant fields from the CSV file
+  val POLICY_ID = 0
+  val TOTAL_INVESTED = 8
+  val LATITUDE = 13
+  val LONGITUDE = 14
+
+  def main(args: Array[String]) {
+
+    val filename = args[0]
+    val elkIP = args[1]
+    println(s"About to send the file ${filename} to ELK@${elkIP}")
+
+    val lines = Source.fromFile(filename).getLines().drop(1)
+    val payload = lines.map(_.split(",")).map(x => (x(POLICY_ID),x(TOTAL_INVESTED),x(LATITUDE).toFloat,x(LONGITUDE).toFloat))
+
+    val bulkPuts = payload.flatMap(x => Seq(s"""{ "create" : { "_index" : "my_locations2", "_type" : "location" , "_id" : "${x._1}"} }""",
+          s"""{"pin" : { "location" : { "lat" : ${x._3}, "lon" : ${x._4} }, "key" : "${x._1}", "tiv" : ${x._2}}}"""))
+
+    println(Http(s"http://${elkIP}:9200/_bulk")
+        .timeout(connTimeoutMs = 1000, readTimeoutMs = 60000)
+        .header("content-type", "application/json")
+        .postData(bulkPuts.mkString("\n")).asString)
+  }
+```
+

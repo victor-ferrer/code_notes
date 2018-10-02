@@ -173,6 +173,21 @@
         
             
     <ul class="subnav">
+    <li><span>React</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../../react/leaftletsample/">Leaftlet sample</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
     <li><span>Scala</span></li>
 
         
@@ -274,6 +289,9 @@
                 
             
                 <li class="toctree-l3"><a href="#add-dynamic-partitions-to-a-dataframe">Add dynamic partitions to a DataFrame</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#compare-two-rows-within-two-dataframestwo-parquet-files">Compare two rows within two Dataframes/two Parquet Files</a></li>
                 
             
             </ul>
@@ -447,6 +465,21 @@ df.coalesce(1).write.format(&quot;com.databricks.spark.csv&quot;)
     StructField(&quot;key&quot;, StringType, true),
     StructField(&quot;value&quot;, DoubleType, true)))   
 
+</code></pre>
+
+<h1 id="compare-two-rows-within-two-dataframestwo-parquet-files">Compare two rows within two Dataframes/two Parquet Files</h1>
+<pre><code>    // Read the files
+    val df1 = spark.read.parquet(path1)
+    val df2 = spark.read.parquet(path2)
+
+    // Clean the metadata from the schema
+    val schema_df1 = df1.schema.map(_.copy(metadata = Metadata.empty))
+    val schema_df2 = df2.schema.map(_.copy(metadata = Metadata.empty))
+    println(s&quot;Do schemas match?  ${schema_df1 == schema_df2}&quot;)
+
+    // Get a new dataframe with the rows in the second that dont exist in the first
+    val diff = df1.except(df2)
+    println(s&quot;${diff.count()} rows found to be different&quot;)
 </code></pre>
               
             </div>
