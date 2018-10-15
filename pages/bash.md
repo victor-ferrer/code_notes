@@ -21,3 +21,14 @@ echo Done!
  - `grep -oE` searches ONLY for a pattern
  - `grep -oE < $fileName` is more efficient than `cat $filename | grep -oE`
  - See [this StackOverflow question](https://stackoverflow.com/questions/48945548/bash-script-for-searching-for-a-string-in-a-xml-file-and-rename-the-file-with-th/48946391#48946391)
+
+ # Perform a HTTP request with CURL and extract the status code
+
+ ```
+URL=http://www.google.es
+
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $URL)
+
+if [ $HTTP_CODE -eq  200 ]
+...
+```
