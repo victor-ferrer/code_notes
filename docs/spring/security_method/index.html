@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>JVM - Victor Code Notes</title>
+  <title>Method Security - Victor Code Notes</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "JVM";
-    var mkdocs_page_input_path = "java\\jvm.md";
+    var mkdocs_page_name = "Method Security";
+    var mkdocs_page_input_path = "spring\\security_method.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -109,30 +109,21 @@
                 </li>
     </ul>
                 </li>
-                <li class=" current">
+                <li class="">
                     
     <span class="caption-text">Java</span>
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../crypto/">Cryptography</a>
-                </li>
-                <li class="toctree-l3 current">
-                    
-    <a class="current" href="./">JVM</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l4"><a href="#how-to-open-jmx-ports">How to open JMX ports</a></li>
-    
-
-    <li class="toctree-l4"><a href="#how-to-set-up-jvm-memory-settings">How to set up JVM memory settings</a></li>
-    
-
-    </ul>
+    <a class="" href="../../java/crypto/">Cryptography</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../properties/">File/URL/HDFS Properties</a>
+    <a class="" href="../../java/jvm/">JVM</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../java/properties/">File/URL/HDFS Properties</a>
                 </li>
     </ul>
                 </li>
@@ -164,13 +155,13 @@
                 </li>
     </ul>
                 </li>
-                <li class="">
+                <li class=" current">
                     
     <span class="caption-text">Spring</span>
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/cloud/">Cloud</a>
+    <a class="" href="../cloud/">Cloud</a>
                 </li>
                 <li class="toctree-l3">
                     
@@ -178,43 +169,46 @@
     <ul class="subnav">
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core/">Datasources</a>
+    <a class="" href="../core/">Datasources</a>
                 </li>
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core_profiles/">Profiles</a>
+    <a class="" href="../core_profiles/">Profiles</a>
                 </li>
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core_ssl/">SSL Support</a>
+    <a class="" href="../core_ssl/">SSL Support</a>
                 </li>
     </ul>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/batch/">Batch</a>
+    <a class="" href="../batch/">Batch</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/integration/">Integration</a>
+    <a class="" href="../integration/">Integration</a>
                 </li>
-                <li class="toctree-l3">
+                <li class="toctree-l3 current">
                     
     <span class="caption-text">Security</span>
     <ul class="subnav">
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/security_basic/">Basic Setup</a>
+    <a class="" href="../security_basic/">Basic Setup</a>
                 </li>
-                <li class="toctree-l4">
+                <li class="toctree-l4 current">
                     
-    <a class="" href="../../spring/security_method/">Method Security</a>
+    <a class="current" href="./">Method Security</a>
+    <ul class="subnav">
+            
+    </ul>
                 </li>
     </ul>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/spring_io_sessions/">Spring IO 2018</a>
+    <a class="" href="../spring_io_sessions/">Spring IO 2018</a>
                 </li>
     </ul>
                 </li>
@@ -257,7 +251,11 @@
     
       
         
-          <li>Java &raquo;</li>
+          <li>Security &raquo;</li>
+        
+      
+        
+          <li>Spring &raquo;</li>
         
       
         
@@ -265,7 +263,7 @@
         
       
     
-    <li>JVM</li>
+    <li>Method Security</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -275,20 +273,27 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="how-to-open-jmx-ports">How to open JMX ports</h1>
-<p>JVM options to be set:</p>
-<pre><code>-Djavax.management.builder.initial= 
--Dcom.sun.management.jmxremote 
--Dcom.sun.management.jmxremote.port=8855 
--Dcom.sun.management.jmxremote.authenticate=false 
--Dcom.sun.management.jmxremote.ssl=false
+                <p>To enable <code>@PreAuthorize</code> requests to check user roles before allowing certain methods to be executed, this setup is needed:</p>
+<p>This configuration class enables Method Security and looks for @PathVariable annotation to bind parameters:</p>
+<pre><code>@Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class MethodSecurityConfiguration  extends GlobalMethodSecurityConfiguration{
+
+    @Override
+    protected MethodSecurityExpressionHandler createExpressionHandler() {
+        DefaultMethodSecurityExpressionHandler result = new DefaultMethodSecurityExpressionHandler();
+        result.setParameterNameDiscoverer(new AnnotationParameterNameDiscoverer(PathVariable.class.getName()));
+        return result;
+    }   
+}
 </code></pre>
 
-<p>See <a href="https://stackoverflow.com/questions/856881/how-to-activate-jmx-on-my-jvm-for-access-with-jconsole/856882">this</a></p>
-<h1 id="how-to-set-up-jvm-memory-settings">How to set up JVM memory settings</h1>
-<p>JVM options to be set:</p>
-<pre><code># Starts with 16G and set a maximum of 24G
--Xms16G -Xmx24G
+<p>Then, in order to use this in the code:</p>
+<pre><code>@PreAuthorize(&quot;hasRole('ADMIN_' + #customer )&quot;)
+@DeleteMapping(path = &quot;/{customer }&quot;)
+public void delete( @PathVariable(&quot;customer&quot;) String customer) {
+    // Business logic code doing something with customer $customer 
+}
 </code></pre>
               
             </div>
@@ -297,10 +302,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../properties/" class="btn btn-neutral float-right" title="File/URL/HDFS Properties">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../spring_io_sessions/" class="btn btn-neutral float-right" title="Spring IO 2018">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../crypto/" class="btn btn-neutral" title="Cryptography"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../security_basic/" class="btn btn-neutral" title="Basic Setup"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -326,10 +331,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../crypto/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../security_basic/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../properties/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../spring_io_sessions/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

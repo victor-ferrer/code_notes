@@ -1,6 +1,3 @@
-
-## Simple set up with Spring Security and Spring Boot
-
 Simple in-memory authentication with special rules for several endopoints (local only)
 
 ```
@@ -39,4 +36,3 @@ To use IPV4 instead of IPV6 use this:
 ```
 -Djava.net.preferIPv4Stack=true
 ```
-       

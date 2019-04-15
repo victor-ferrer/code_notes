@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>JVM - Victor Code Notes</title>
+  <title>How to Enable HTTP2 in HAProxy - Victor Code Notes</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "JVM";
-    var mkdocs_page_input_path = "java\\jvm.md";
+    var mkdocs_page_name = "How to Enable HTTP2 in HAProxy";
+    var mkdocs_page_input_path = "haproxy\\http2.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -109,30 +109,21 @@
                 </li>
     </ul>
                 </li>
-                <li class=" current">
+                <li class="">
                     
     <span class="caption-text">Java</span>
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../crypto/">Cryptography</a>
-                </li>
-                <li class="toctree-l3 current">
-                    
-    <a class="current" href="./">JVM</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l4"><a href="#how-to-open-jmx-ports">How to open JMX ports</a></li>
-    
-
-    <li class="toctree-l4"><a href="#how-to-set-up-jvm-memory-settings">How to set up JVM memory settings</a></li>
-    
-
-    </ul>
+    <a class="" href="../../java/crypto/">Cryptography</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../properties/">File/URL/HDFS Properties</a>
+    <a class="" href="../../java/jvm/">JVM</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../java/properties/">File/URL/HDFS Properties</a>
                 </li>
     </ul>
                 </li>
@@ -256,16 +247,8 @@
     <li><a href="../..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Java &raquo;</li>
-        
-      
-        
-          <li>Code Notes &raquo;</li>
-        
-      
     
-    <li>JVM</li>
+    <li>How to Enable HTTP2 in HAProxy</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -275,34 +258,106 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="how-to-open-jmx-ports">How to open JMX ports</h1>
-<p>JVM options to be set:</p>
-<pre><code>-Djavax.management.builder.initial= 
--Dcom.sun.management.jmxremote 
--Dcom.sun.management.jmxremote.port=8855 
--Dcom.sun.management.jmxremote.authenticate=false 
--Dcom.sun.management.jmxremote.ssl=false
+                <h1 id="how-to-enable-http2-in-haproxy">How to Enable HTTP2 in HAProxy</h1>
+<p><em>Source</em></p>
+<p>Based on this <a href="https://ops.tips/blog/haproxy-http2/">blog post</a>.</p>
+<p><em>Create a certificate</em></p>
+<p>This is an easy way to generate a self-signed certificate. Not a recommended production setup!</p>
+<pre><code>$ openssl req   \
+          -x509 \
+          -sha256 \
+          -newkey rsa:4096 \
+          -keyout &quot;test.com.key&quot; 
+          -out &quot;test.com.pem&quot; \
+          -days 730 \
+          -nodes \
+          -subj //C=BR/ST=SaoPaulo/L=SaoPaulo/O=TestOrg/OU=TestUnit/CN=test.com
 </code></pre>
 
-<p>See <a href="https://stackoverflow.com/questions/856881/how-to-activate-jmx-on-my-jvm-for-access-with-jconsole/856882">this</a></p>
-<h1 id="how-to-set-up-jvm-memory-settings">How to set up JVM memory settings</h1>
-<p>JVM options to be set:</p>
-<pre><code># Starts with 16G and set a maximum of 24G
--Xms16G -Xmx24G
+<p>Concatenate both private and public keys and pass them to HAProxy</p>
+<pre><code>cat ./test.com.pem ./test.com.key &gt; haproxy_test.com
+</code></pre>
+
+<p>Dockerfile</p>
+<pre><code>FROM haproxy
+COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+COPY haproxy_test.com /usr/local/etc/haproxy/certs/
+COPY 404.http /tmp/sample/errorfiles/
+</code></pre>
+
+<p>Build and run the Docker container</p>
+<pre><code>docker build .
+docker run -d --name haproxy-https -p 443:443 -p 80:80 [IMAGE_ID]
+</code></pre>
+
+<p>Add test.com to the etc/hosts file</p>
+<p>haproxy.cfg</p>
+<pre><code>global
+# Setting the maximum size of the Diffie-hellman parameters
+# used in the TLS negotiation such that HAProxy won't warn us 
+# about the low default value of 1024.
+                tune.ssl.default-dh-param   2048
+
+
+defaults
+# As we're sticking with using HTTP/1.1 all the way
+# we can set the mode in the `defaults` section and
+# have it applied everywhere.
+#
+# If you set only in the frontend, then haproxy will
+# complain about letting backend be tcp.
+                mode http
+
+
+frontend        https
+# Binding to port 443 forces us to have higher privileges
+# when launching HAProxy, but it allows us not to have to
+# set the `:&lt;port&gt;` in the URL when connecting to it using
+# a browser (as `https` will imply port 443).
+#
+# The certificate set here is the one that contains both the
+# private key and the actual `.pem` that we generated using
+# openssl.
+#
+# ps.: if you have *a bunch* of certificates to serve, then 
+# you should switch to `crt-list` as HAProxy has a limit on
+# the size of each line in this config file.
+                bind                        *:443  ssl crt /usr/local/etc/haproxy/certs/haproxy_test.com alpn h2,http/1.1
+
+# Simple ACL to send traffic to our custom tailored web server.
+#
+# This way we can exercise a &quot;not found&quot; when not having `HOST`
+# properly set.
+#
+# This also demonstrates how HAProxy is indeed decyphering the
+# traffic (otherwise it wouldn't catch the Host header).
+                acl                         host_matches hdr_dom(host) test.com
+                use_backend                 desired_backend if host_matches
+                default_backend             not_found
+
+
+# Our server that serves `/tmp/sample/www` using python's 
+# SimpleHTTPServer module.
+backend         desired_backend
+                server                      myserver 192.168.1.134:8000
+
+
+
+# A dumb &quot;not-found&quot; auto-responder using HAProxy's errorfile
+# directive.
+#
+# As the ACL that send traffic to this backend is the default
+# (and least prioritized), when we reach this backend, it means
+# that we didn't find a desired backend, thus we should serve
+# a 404 instead of the generic 503 that haproxy gives back to
+# clients when something goes wrong.
+backend         not_found
+                errorfile                   503 /tmp/sample/errorfiles/404.http
 </code></pre>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../properties/" class="btn btn-neutral float-right" title="File/URL/HDFS Properties">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../crypto/" class="btn btn-neutral" title="Cryptography"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -326,10 +381,6 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../crypto/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../properties/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

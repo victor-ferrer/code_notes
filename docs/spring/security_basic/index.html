@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>JVM - Victor Code Notes</title>
+  <title>Basic Setup - Victor Code Notes</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "JVM";
-    var mkdocs_page_input_path = "java\\jvm.md";
+    var mkdocs_page_name = "Basic Setup";
+    var mkdocs_page_input_path = "spring\\security_basic.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -109,30 +109,21 @@
                 </li>
     </ul>
                 </li>
-                <li class=" current">
+                <li class="">
                     
     <span class="caption-text">Java</span>
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../crypto/">Cryptography</a>
-                </li>
-                <li class="toctree-l3 current">
-                    
-    <a class="current" href="./">JVM</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l4"><a href="#how-to-open-jmx-ports">How to open JMX ports</a></li>
-    
-
-    <li class="toctree-l4"><a href="#how-to-set-up-jvm-memory-settings">How to set up JVM memory settings</a></li>
-    
-
-    </ul>
+    <a class="" href="../../java/crypto/">Cryptography</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../properties/">File/URL/HDFS Properties</a>
+    <a class="" href="../../java/jvm/">JVM</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../java/properties/">File/URL/HDFS Properties</a>
                 </li>
     </ul>
                 </li>
@@ -164,13 +155,13 @@
                 </li>
     </ul>
                 </li>
-                <li class="">
+                <li class=" current">
                     
     <span class="caption-text">Spring</span>
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/cloud/">Cloud</a>
+    <a class="" href="../cloud/">Cloud</a>
                 </li>
                 <li class="toctree-l3">
                     
@@ -178,43 +169,46 @@
     <ul class="subnav">
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core/">Datasources</a>
+    <a class="" href="../core/">Datasources</a>
                 </li>
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core_profiles/">Profiles</a>
+    <a class="" href="../core_profiles/">Profiles</a>
                 </li>
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core_ssl/">SSL Support</a>
+    <a class="" href="../core_ssl/">SSL Support</a>
                 </li>
     </ul>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/batch/">Batch</a>
+    <a class="" href="../batch/">Batch</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/integration/">Integration</a>
+    <a class="" href="../integration/">Integration</a>
                 </li>
-                <li class="toctree-l3">
+                <li class="toctree-l3 current">
                     
     <span class="caption-text">Security</span>
     <ul class="subnav">
-                <li class="toctree-l4">
+                <li class="toctree-l4 current">
                     
-    <a class="" href="../../spring/security_basic/">Basic Setup</a>
+    <a class="current" href="./">Basic Setup</a>
+    <ul class="subnav">
+            
+    </ul>
                 </li>
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/security_method/">Method Security</a>
+    <a class="" href="../security_method/">Method Security</a>
                 </li>
     </ul>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/spring_io_sessions/">Spring IO 2018</a>
+    <a class="" href="../spring_io_sessions/">Spring IO 2018</a>
                 </li>
     </ul>
                 </li>
@@ -257,7 +251,11 @@
     
       
         
-          <li>Java &raquo;</li>
+          <li>Security &raquo;</li>
+        
+      
+        
+          <li>Spring &raquo;</li>
         
       
         
@@ -265,7 +263,7 @@
         
       
     
-    <li>JVM</li>
+    <li>Basic Setup</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -275,20 +273,40 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="how-to-open-jmx-ports">How to open JMX ports</h1>
-<p>JVM options to be set:</p>
-<pre><code>-Djavax.management.builder.initial= 
--Dcom.sun.management.jmxremote 
--Dcom.sun.management.jmxremote.port=8855 
--Dcom.sun.management.jmxremote.authenticate=false 
--Dcom.sun.management.jmxremote.ssl=false
+                <p>Simple in-memory authentication with special rules for several endopoints (local only)</p>
+<pre><code>@Configuration
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    ...
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .inMemoryAuthentication()
+            .withUser(&quot;user&quot;).password(user_password).roles(&quot;USER&quot;)
+        .and()
+            .withUser(&quot;admin&quot;).password(admin_password).authorities(&quot;ADMIN&quot;);
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf()
+            .disable()
+            .httpBasic()
+         .and()
+            .authorizeRequests()
+            .antMatchers(&quot;/admin/config/decrypt&quot;).access(&quot;hasIpAddress('127.0.0.1/32') and hasAuthority('ADMIN')&quot;)
+            .antMatchers(&quot;/admin/config/encrypt&quot;).access(&quot;hasIpAddress('127.0.0.1/32') and hasAuthority('ADMIN')&quot;)
+            .antMatchers(&quot;/admin/config/**&quot;).authenticated()
+            .antMatchers(&quot;/**&quot;).permitAll()
+        ;
+    }
+}
 </code></pre>
 
-<p>See <a href="https://stackoverflow.com/questions/856881/how-to-activate-jmx-on-my-jvm-for-access-with-jconsole/856882">this</a></p>
-<h1 id="how-to-set-up-jvm-memory-settings">How to set up JVM memory settings</h1>
-<p>JVM options to be set:</p>
-<pre><code># Starts with 16G and set a maximum of 24G
--Xms16G -Xmx24G
+<p>To use IPV4 instead of IPV6 use this:</p>
+<pre><code>-Djava.net.preferIPv4Stack=true
 </code></pre>
               
             </div>
@@ -297,10 +315,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../properties/" class="btn btn-neutral float-right" title="File/URL/HDFS Properties">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../security_method/" class="btn btn-neutral float-right" title="Method Security">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../crypto/" class="btn btn-neutral" title="Cryptography"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../integration/" class="btn btn-neutral" title="Integration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -326,10 +344,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../crypto/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../integration/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../properties/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../security_method/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

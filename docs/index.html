@@ -3,31 +3,29 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
   
-  <title>Victor Code Notes</title>
-  
-
-  <link rel="shortcut icon" href="./img/favicon.ico">
-
-  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Home - Victor Code Notes</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="./css/highlight.css">
-
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
   <script>
     // Current page data
-    var mkdocs_page_name = "None";
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="./js/jquery-2.1.1.min.js"></script>
-  <script src="./js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="./js/highlight.pack.js"></script>
-  <script src="./js/theme.js"></script> 
-
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -41,265 +39,206 @@
         <a href="." class="icon icon-home"> Victor Code Notes</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-        <ul class="current">
+	<ul class="current">
+	  
           
-            <li>
-    <li class="toctree-l1 current">
-        <a class="current" href=".">Home</a>
-        
-            <ul>
+            <li class="toctree-l1 current">
+		
+    <a class="current" href=".">Home</a>
+    <ul class="subnav">
             
-                <li class="toctree-l3"><a href="#welcome-to-victors-code-notes">Welcome to Victor's Code Notes</a></li>
-                
-                    <li><a class="toctree-l4" href="#about-the-autor">About the autor</a></li>
-                
-                    <li><a class="toctree-l4" href="#contact">Contact</a></li>
-                
-            
-            </ul>
+    <li class="toctree-l2"><a href="#welcome-to-victors-code-notes">Welcome to Victor's Code Notes</a></li>
+    
+        <ul>
         
-    </li>
-<li>
+            <li><a class="toctree-l3" href="#about-the-autor">About the autor</a></li>
+        
+            <li><a class="toctree-l3" href="#contact">Contact</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
           
-            <li>
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Code Notes</span>
     <ul class="subnav">
-    <li><span>Code Notes</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="bash/">Bash</a>
-        
-    </li>
-
-        
-            
+                <li class="">
+                    
+    <a class="" href="bash/">Bash</a>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Big Data</span>
     <ul class="subnav">
-    <li><span>Big Data</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="bigdata/hive/">Hive</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="bigdata/parquet/">Parquet</a>
-        
-    </li>
-
-        
+                <li class="toctree-l3">
+                    
+    <a class="" href="bigdata/hive/">Hive</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="bigdata/parquet/">Parquet</a>
+                </li>
     </ul>
-
-        
-            
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Docker</span>
     <ul class="subnav">
-    <li><span>Docker</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="docker/cloudera/">Cloudera Quickstart</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="docker/sqlserver/">SQL Server</a>
-        
-    </li>
-
-        
+                <li class="toctree-l3">
+                    
+    <a class="" href="docker/cloudera/">Cloudera Quickstart</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="docker/sqlserver/">SQL Server</a>
+                </li>
     </ul>
-
-        
-            
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">ElasticSearch</span>
     <ul class="subnav">
-    <li><span>ElasticSearch</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="elasticsearch/geohashing/">Geographical</a>
-        
-    </li>
-
-        
+                <li class="toctree-l3">
+                    
+    <a class="" href="elasticsearch/geohashing/">Geographical</a>
+                </li>
     </ul>
-
-        
-            
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Git</span>
     <ul class="subnav">
-    <li><span>Git</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="git/ssh-clone/">SSH Usage</a>
-        
-    </li>
-
-        
+                <li class="toctree-l3">
+                    
+    <a class="" href="git/ssh-clone/">SSH Usage</a>
+                </li>
     </ul>
-
-        
-            
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Java</span>
     <ul class="subnav">
-    <li><span>Java</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="java/crypto/">Cryptography</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="java/jvm/">JVM</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="java/properties/">File/URL/HDFS Properties</a>
-        
-    </li>
-
-        
+                <li class="toctree-l3">
+                    
+    <a class="" href="java/crypto/">Cryptography</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="java/jvm/">JVM</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="java/properties/">File/URL/HDFS Properties</a>
+                </li>
     </ul>
-
-        
-            
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">React</span>
     <ul class="subnav">
-    <li><span>React</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="react/leaftletsample/">Leaftlet sample</a>
-        
-    </li>
-
-        
+                <li class="toctree-l3">
+                    
+    <a class="" href="react/leaftletsample.html">Leaftlet sample</a>
+                </li>
     </ul>
-
-        
-            
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Scala</span>
     <ul class="subnav">
-    <li><span>Scala</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="scala/cheatsheets/">Cheatsheets</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="scala/parallel/">Parallel Collections</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="scala/json/">Parse a JSON</a>
-        
-    </li>
-
-        
+                <li class="toctree-l3">
+                    
+    <a class="" href="scala/cheatsheets/">Cheatsheets</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="scala/parallel/">Parallel Collections</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="scala/json/">Parse a JSON</a>
+                </li>
     </ul>
-
-        
-            
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Spring</span>
     <ul class="subnav">
-    <li><span>Spring</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="spring/cloud/">Cloud</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="spring/core/">Core</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="spring/batch/">Batch</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="spring/integration/">Integration</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="spring/security/">Security</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="spring/spring_io_sessions/">Spring IO 2018</a>
-        
-    </li>
-
-        
-    </ul>
-
-        
-            
+                <li class="toctree-l3">
+                    
+    <a class="" href="spring/cloud/">Cloud</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Core</span>
     <ul class="subnav">
-    <li><span>Spark</span></li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="spark/spark/">DataFrames</a>
-        
-    </li>
-
-        
-            
-    <li class="toctree-l1 ">
-        <a class="" href="spark/structured_streaming/">Structured Streaming</a>
-        
-    </li>
-
-        
+                <li class="toctree-l4">
+                    
+    <a class="" href="spring/core/">Datasources</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="spring/core_profiles/">Profiles</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="spring/core_ssl/">SSL Support</a>
+                </li>
     </ul>
-
-        
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="spring/batch/">Batch</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="spring/integration/">Integration</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Security</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="spring/security_basic/">Basic Setup</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="spring/security_method/">Method Security</a>
+                </li>
     </ul>
-<li>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="spring/spring_io_sessions/">Spring IO 2018</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Spark</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="spark/spark/">DataFrames</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="spark/structured_streaming/">Structured Streaming</a>
+                </li>
+    </ul>
+                </li>
+    </ul>
+	    </li>
           
         </ul>
       </div>
@@ -351,7 +290,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="bash/" class="btn btn-neutral float-right" title="Bash"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="bash/" class="btn btn-neutral float-right" title="Bash">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
     </div>
@@ -366,7 +305,7 @@
 
   Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-	  
+      
         </div>
       </div>
 
@@ -374,7 +313,7 @@
 
   </div>
 
-<div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" style="cursor: pointer">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
@@ -383,11 +322,14 @@
       
     </span>
 </div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 0.14.0
-Build Date UTC : 2018-10-02 21:01:48.396568
+MkDocs version : 1.0.4
+Build Date UTC : 2019-04-15 07:08:54
 -->

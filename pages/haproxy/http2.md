@@ -90,7 +90,7 @@ frontend        https
 # Our server that serves `/tmp/sample/www` using python's 
 # SimpleHTTPServer module.
 backend         desired_backend
-                server                      myserver 192.168.1.134:8000/hello
+                server                      myserver 192.168.1.134:8000
 
 
 

@@ -27,10 +27,15 @@ pages:
        - 'Parse a JSON' : scala/json.md
     - Spring:
        - 'Cloud' : spring/cloud.md
-       - 'Core': spring/core.md
+       - 'Core':
+            - 'Datasources' : spring/core.md
+            - 'Profiles' : spring/core_profiles.md
+            - 'SSL Support' : spring/core_ssl.md
        - 'Batch': spring/batch.md
        - 'Integration': spring/integration.md
-       - 'Security': spring/security.md       
+       - 'Security':
+           - 'Basic Setup' : spring/security_basic.md
+           - 'Method Security' : spring/security_method.md
        -  'Spring IO 2018': spring/spring_io_sessions.md
     - Spark: 
        - 'DataFrames' : spark/spark.md
