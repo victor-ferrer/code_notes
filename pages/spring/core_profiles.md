@@ -41,7 +41,6 @@ public class ProdProfileCondition extends ProfileCondition {
 Finally, in order to activate it:
 ```
 @Configuration
-@Profile({"prod"})
 @Conditional(value = {ProdProfileCondition.class})
 @EnableRedisHttpSession
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {

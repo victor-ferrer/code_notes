@@ -24,4 +24,14 @@ public void delete( @PathVariable("customer") String customer) {
 }
 ```
 
+Another option is to inject the `Principal` and use a Bean reference:
+
+```
+@PreAuthorize("@accessService.check(#user, #customer)")
+@DeleteMapping(path = "/{customer }")
+public void delete( @PathVariable("customer") String customer, @P("user") Principal user) {
+	// Business logic code doing something with customer $customer 
+}
+```
+
 	   

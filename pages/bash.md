@@ -24,7 +24,7 @@ echo Done!
 
  # Perform a HTTP request with CURL and extract the status code
 
- ```
+```
 URL=http://www.google.es
 
 HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" $URL)
