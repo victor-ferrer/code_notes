@@ -26,6 +26,7 @@ pages:
        - 'Parallel Collections' : scala/parallel.md       
        - 'Parse a JSON' : scala/json.md
     - Spring:
+       - 'Caching' : spring/caching.md
        - 'Cloud' : spring/cloud.md
        - 'Core':
             - 'Datasources' : spring/core.md
