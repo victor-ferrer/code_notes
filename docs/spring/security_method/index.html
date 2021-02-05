@@ -85,6 +85,14 @@
                 </li>
                 <li class="toctree-l3">
                     
+    <a class="" href="../../docker/jupyter/">Jupyter Notebooks</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../docker/kind/">Kubernetes</a>
+                </li>
+                <li class="toctree-l3">
+                    
     <a class="" href="../../docker/sqlserver/">SQL Server</a>
                 </li>
     </ul>
@@ -129,11 +137,11 @@
                 </li>
                 <li class="">
                     
-    <span class="caption-text">React</span>
+    <span class="caption-text">Python</span>
     <ul class="subnav">
                 <li class="toctree-l3">
                     
-    <a class="" href="../../react/leaftletsample.html">Leaftlet sample</a>
+    <a class="" href="../../python/python_clients/">OpenApi Python client</a>
                 </li>
     </ul>
                 </li>
@@ -159,6 +167,10 @@
                     
     <span class="caption-text">Spring</span>
     <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../caching/">Caching</a>
+                </li>
                 <li class="toctree-l3">
                     
     <a class="" href="../cloud/">Cloud</a>
@@ -292,6 +304,14 @@ public class MethodSecurityConfiguration  extends GlobalMethodSecurityConfigurat
 <pre><code>@PreAuthorize(&quot;hasRole('ADMIN_' + #customer )&quot;)
 @DeleteMapping(path = &quot;/{customer }&quot;)
 public void delete( @PathVariable(&quot;customer&quot;) String customer) {
+    // Business logic code doing something with customer $customer 
+}
+</code></pre>
+
+<p>Another option is to inject the <code>Principal</code> and use a Bean reference:</p>
+<pre><code>@PreAuthorize(&quot;@accessService.check(#user, #customer)&quot;)
+@DeleteMapping(path = &quot;/{customer }&quot;)
+public void delete( @PathVariable(&quot;customer&quot;) String customer, @P(&quot;user&quot;) Principal user) {
     // Business logic code doing something with customer $customer 
 }
 </code></pre>

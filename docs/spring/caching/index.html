@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Cloudera Quickstart - Victor Code Notes</title>
+  <title>Caching - Victor Code Notes</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Cloudera Quickstart";
-    var mkdocs_page_input_path = "docker\\cloudera.md";
+    var mkdocs_page_name = "Caching";
+    var mkdocs_page_input_path = "spring\\caching.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -75,31 +75,25 @@
                 </li>
     </ul>
                 </li>
-                <li class=" current">
+                <li class="">
                     
     <span class="caption-text">Docker</span>
     <ul class="subnav">
-                <li class="toctree-l3 current">
+                <li class="toctree-l3">
                     
-    <a class="current" href="./">Cloudera Quickstart</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l4"><a href="#cloudera-quickstart-docker-container">Cloudera Quickstart docker container</a></li>
-    
-
-    </ul>
+    <a class="" href="../../docker/cloudera/">Cloudera Quickstart</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../jupyter/">Jupyter Notebooks</a>
+    <a class="" href="../../docker/jupyter/">Jupyter Notebooks</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../kind/">Kubernetes</a>
+    <a class="" href="../../docker/kind/">Kubernetes</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../sqlserver/">SQL Server</a>
+    <a class="" href="../../docker/sqlserver/">SQL Server</a>
                 </li>
     </ul>
                 </li>
@@ -169,17 +163,20 @@
                 </li>
     </ul>
                 </li>
-                <li class="">
+                <li class=" current">
                     
     <span class="caption-text">Spring</span>
     <ul class="subnav">
-                <li class="toctree-l3">
+                <li class="toctree-l3 current">
                     
-    <a class="" href="../../spring/caching/">Caching</a>
+    <a class="current" href="./">Caching</a>
+    <ul class="subnav">
+            
+    </ul>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/cloud/">Cloud</a>
+    <a class="" href="../cloud/">Cloud</a>
                 </li>
                 <li class="toctree-l3">
                     
@@ -187,25 +184,25 @@
     <ul class="subnav">
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core/">Datasources</a>
+    <a class="" href="../core/">Datasources</a>
                 </li>
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core_profiles/">Profiles</a>
+    <a class="" href="../core_profiles/">Profiles</a>
                 </li>
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/core_ssl/">SSL Support</a>
+    <a class="" href="../core_ssl/">SSL Support</a>
                 </li>
     </ul>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/batch/">Batch</a>
+    <a class="" href="../batch/">Batch</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/integration/">Integration</a>
+    <a class="" href="../integration/">Integration</a>
                 </li>
                 <li class="toctree-l3">
                     
@@ -213,17 +210,17 @@
     <ul class="subnav">
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/security_basic/">Basic Setup</a>
+    <a class="" href="../security_basic/">Basic Setup</a>
                 </li>
                 <li class="toctree-l4">
                     
-    <a class="" href="../../spring/security_method/">Method Security</a>
+    <a class="" href="../security_method/">Method Security</a>
                 </li>
     </ul>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../../spring/spring_io_sessions/">Spring IO 2018</a>
+    <a class="" href="../spring_io_sessions/">Spring IO 2018</a>
                 </li>
     </ul>
                 </li>
@@ -266,7 +263,7 @@
     
       
         
-          <li>Docker &raquo;</li>
+          <li>Spring &raquo;</li>
         
       
         
@@ -274,7 +271,7 @@
         
       
     
-    <li>Cloudera Quickstart</li>
+    <li>Caching</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -284,64 +281,88 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="cloudera-quickstart-docker-container">Cloudera Quickstart docker container</h1>
-<p><em>Pull the image</em></p>
-<pre><code># Pulls the image (4Gb!)
-docker pull cloudera/quickstart
+                <p>Caching with EHCache in Spring-Boot</p>
+<p>Dependencies needed</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-boot-starter-cache&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;javax.cache&lt;/groupId&gt;
+    &lt;artifactId&gt;cache-api&lt;/artifactId&gt;
+&lt;/dependency&gt;
+&lt;dependency&gt;
+     &lt;groupId&gt;org.ehcache&lt;/groupId&gt;
+     &lt;artifactId&gt;ehcache&lt;/artifactId&gt;
+    &lt;version&gt;${ehcache.version}&lt;/version&gt;
+&lt;/dependency&gt;
 </code></pre>
 
-<p><em>Set a variable with all needed ports to be opened</em></p>
-<pre><code># Ports to be opened (most commonly used)
-# - 8888      expose hue interface
-# - 7180      expose cloudera manager
-# - 80        expose cloudera examples
-# - 8983      expose port of Web UI solr search 
-# - 50070     expose name node web ui interface
-# - 50090     expose secondary name node
-# - 50075     expose data  node
-# - 50030     expose job tracker
-# - 50060     expose task trackers
-# - 60010     expose hbase master status
-# - 60030     expose hbase region server
-# - 9095      expose hbase thrift server
-# - 8020      expose hdfs port
-# - 8088      expose job tracker port
-# - 4040      expose port of spark
-# - 18088     expose history server web interface
-# ...
-ports=&quot;-p 8888:8888 -p 7180:7180 -p 80:80 -p 4040:4040 -p 4041:4041 \
--p 4042:4042  -p 4043:4043 -p 9092:9092 -p 2181:2181 -p 8020:8020   \ 
--p 18088:18088 -p 10000:10000 -p 21050:21050 -p 50070:50070  -p 50075:50075 \
--p 50060:50060  -p 50030:50030 -p 50010:50010&quot;
+<p>Spring Configuration Class</p>
+<pre><code>@Configuration
+@EnableCaching
+public class CacheConfiguration {
+
+    // Implement your own key generator if needed
+    @Bean
+    public KeyGenerator requestKeyGenerator() {
+        return new KeyGenerator() {
+
+            @Override
+            public Object generate(Object target, Method method, Object... params) {...}
+        }}
+
+    // Implement a bean exposing a boolean method checking whether a request should be cached
+    @Bean
+    public CacheControl cacheControl() {
+        return new cacheControl();
+    }
+
+
+    static class CacheControl {
+        public boolean checkIfCachingIsNeeded(BusinessRequest request) {...}}
+
+}
 </code></pre>
 
-<p><em>Set a variable with a volume for file exchange with the container</em></p>
-<pre><code># Volume used to exchange stuff with the running container
-localVolumeDir=/home/me/cloudera_exchange_dir
+<p>How to mark a method as <code>Cacheable</code>:</p>
+<pre><code>@Cacheable(cacheNames=&quot;my_cache&quot;, keyGenerator=&quot;requestKeyGenerator&quot;,condition=&quot;@cacheControl.checkIfCachingIsNeeded(#a0)&quot;)
+public BusinessResponse execute(BusinessRequest request){
+...
+}
 </code></pre>
 
-<p><em>Run the container and store its ID</em></p>
-<pre><code>containerId=`docker run --hostname=quickstart.cloudera -d \
-                -v $localVolumeDir:/volume
-                --privileged=true -t -i $ports cloudera/quickstart /usr/bin/docker-quickstart`
-</code></pre>
+<p>Note that <code>BusinessResponse</code> should be serializable so it can be stored in the different cache levels.</p>
+<p>EHCache XML configuration</p>
+<pre><code>&lt;config xmlns='http://www.ehcache.org/v3'
+        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+        xmlns:jsr107=&quot;http://www.ehcache.org/v3/jsr107&quot;
+        xsi:schemaLocation=&quot;http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.5.xsd
+                            http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.5.xsd&quot;&gt;
 
-<p><em>Install and run the Kafka server</em></p>
-<p>Kafka does not seem to be installed, but you can quickly do it:</p>
-<pre><code># See https://kafka.apache.org/quickstart
+    &lt;persistence directory=&quot;./target&quot;/&gt;
 
-# Download the binaries and execute this command:
-# &gt; bin/kafka-server-start.sh config/server.properties
+    &lt;cache alias=&quot;my_cache&quot; &gt;
 
-# If you want to access Kafka from outside the container, you need to change this line in server.properties
-# zookeeper.connect=localhost:2181
-# And replace it with the Docker host public IP address
-</code></pre>
+        &lt;key-type copier=&quot;org.ehcache.impl.copy.SerializingCopier&quot;&gt;java.lang.String&lt;/key-type&gt;
+        &lt;value-type copier=&quot;org.ehcache.impl.copy.SerializingCopier&quot;&gt;org.mycompany.bussiness.BusinessResponse&lt;/value-type&gt;
 
-<p><em>Optional: Run Cloudera Manager</em></p>
-<pre><code>sudo su
-cd /home/cloudera/
-./cloudera-manager
+        &lt;!--Entries in this cache will not expire --&gt;
+        &lt;expiry&gt;
+            &lt;none/&gt;
+        &lt;/expiry&gt;
+
+        &lt;!-- Cache entries will be stored in head memory, then off heap RAM and finally disk
+             Most used records will be in heap, then RAM and the least used will go to disk
+         --&gt;
+        &lt;resources&gt;
+            &lt;heap unit=&quot;MB&quot;&gt;512&lt;/heap&gt;
+            &lt;offheap unit=&quot;MB&quot;&gt;2048&lt;/offheap&gt;
+            &lt;disk unit=&quot;MB&quot;&gt;5096&lt;/disk&gt;
+        &lt;/resources&gt;
+        &lt;jsr107:mbeans enable-statistics=&quot;true&quot;/&gt;
+    &lt;/cache&gt;
+&lt;/config&gt;
 </code></pre>
               
             </div>
@@ -350,10 +371,10 @@ cd /home/cloudera/
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../jupyter/" class="btn btn-neutral float-right" title="Jupyter Notebooks">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../cloud/" class="btn btn-neutral float-right" title="Cloud">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../bigdata/parquet/" class="btn btn-neutral" title="Parquet"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../scala/json/" class="btn btn-neutral" title="Parse a JSON"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -379,10 +400,10 @@ cd /home/cloudera/
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../bigdata/parquet/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../scala/json/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../jupyter/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../cloud/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

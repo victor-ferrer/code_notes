@@ -21,8 +21,8 @@ pages:
        - 'Cryptography' : java/crypto.md
        - 'JVM' : java/jvm.md
        - 'File/URL/HDFS Properties' : java/properties.md
-    - React:
-       - 'Leaftlet sample': react/leaftletsample.html    
+    - Python:
+        - 'OpenApi Python client' : python/python_clients.md
     - Scala: 
        - 'Cheatsheets' : scala/cheatsheets.md
        - 'Parallel Collections' : scala/parallel.md       

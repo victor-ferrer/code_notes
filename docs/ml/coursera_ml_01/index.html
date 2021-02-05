@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../../img/favicon.ico">
-  <title>Cloudera Quickstart - Victor Code Notes</title>
+  <title>AWS Image with Python and Graph Lab - Victor Code Notes</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Cloudera Quickstart";
-    var mkdocs_page_input_path = "docker\\cloudera.md";
+    var mkdocs_page_name = "AWS Image with Python and Graph Lab";
+    var mkdocs_page_input_path = "ml\\coursera_ml_01.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -75,31 +75,25 @@
                 </li>
     </ul>
                 </li>
-                <li class=" current">
+                <li class="">
                     
     <span class="caption-text">Docker</span>
     <ul class="subnav">
-                <li class="toctree-l3 current">
+                <li class="toctree-l3">
                     
-    <a class="current" href="./">Cloudera Quickstart</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l4"><a href="#cloudera-quickstart-docker-container">Cloudera Quickstart docker container</a></li>
-    
-
-    </ul>
+    <a class="" href="../../docker/cloudera/">Cloudera Quickstart</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../jupyter/">Jupyter Notebooks</a>
+    <a class="" href="../../docker/jupyter/">Jupyter Notebooks</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../kind/">Kubernetes</a>
+    <a class="" href="../../docker/kind/">Kubernetes</a>
                 </li>
                 <li class="toctree-l3">
                     
-    <a class="" href="../sqlserver/">SQL Server</a>
+    <a class="" href="../../docker/sqlserver/">SQL Server</a>
                 </li>
     </ul>
                 </li>
@@ -265,16 +259,8 @@
     <li><a href="../..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Docker &raquo;</li>
-        
-      
-        
-          <li>Code Notes &raquo;</li>
-        
-      
     
-    <li>Cloudera Quickstart</li>
+    <li>AWS Image with Python and Graph Lab</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -284,78 +270,13 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="cloudera-quickstart-docker-container">Cloudera Quickstart docker container</h1>
-<p><em>Pull the image</em></p>
-<pre><code># Pulls the image (4Gb!)
-docker pull cloudera/quickstart
-</code></pre>
-
-<p><em>Set a variable with all needed ports to be opened</em></p>
-<pre><code># Ports to be opened (most commonly used)
-# - 8888      expose hue interface
-# - 7180      expose cloudera manager
-# - 80        expose cloudera examples
-# - 8983      expose port of Web UI solr search 
-# - 50070     expose name node web ui interface
-# - 50090     expose secondary name node
-# - 50075     expose data  node
-# - 50030     expose job tracker
-# - 50060     expose task trackers
-# - 60010     expose hbase master status
-# - 60030     expose hbase region server
-# - 9095      expose hbase thrift server
-# - 8020      expose hdfs port
-# - 8088      expose job tracker port
-# - 4040      expose port of spark
-# - 18088     expose history server web interface
-# ...
-ports=&quot;-p 8888:8888 -p 7180:7180 -p 80:80 -p 4040:4040 -p 4041:4041 \
--p 4042:4042  -p 4043:4043 -p 9092:9092 -p 2181:2181 -p 8020:8020   \ 
--p 18088:18088 -p 10000:10000 -p 21050:21050 -p 50070:50070  -p 50075:50075 \
--p 50060:50060  -p 50030:50030 -p 50010:50010&quot;
-</code></pre>
-
-<p><em>Set a variable with a volume for file exchange with the container</em></p>
-<pre><code># Volume used to exchange stuff with the running container
-localVolumeDir=/home/me/cloudera_exchange_dir
-</code></pre>
-
-<p><em>Run the container and store its ID</em></p>
-<pre><code>containerId=`docker run --hostname=quickstart.cloudera -d \
-                -v $localVolumeDir:/volume
-                --privileged=true -t -i $ports cloudera/quickstart /usr/bin/docker-quickstart`
-</code></pre>
-
-<p><em>Install and run the Kafka server</em></p>
-<p>Kafka does not seem to be installed, but you can quickly do it:</p>
-<pre><code># See https://kafka.apache.org/quickstart
-
-# Download the binaries and execute this command:
-# &gt; bin/kafka-server-start.sh config/server.properties
-
-# If you want to access Kafka from outside the container, you need to change this line in server.properties
-# zookeeper.connect=localhost:2181
-# And replace it with the Docker host public IP address
-</code></pre>
-
-<p><em>Optional: Run Cloudera Manager</em></p>
-<pre><code>sudo su
-cd /home/cloudera/
-./cloudera-manager
-</code></pre>
+                <h1 id="aws-image-with-python-and-graph-lab">AWS Image with Python and Graph Lab</h1>
+<p>Graph Lab API [here|https://turi.com/products/create/docs/graphlab.data_structures.html]
+How to create an AWS Instance with Python and Graphlab: [here|https://turi.com/download/install-graphlab-create-aws-coursera.html]</p>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../jupyter/" class="btn btn-neutral float-right" title="Jupyter Notebooks">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href="../../bigdata/parquet/" class="btn btn-neutral" title="Parquet"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -379,10 +300,6 @@ cd /home/cloudera/
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../bigdata/parquet/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../jupyter/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
