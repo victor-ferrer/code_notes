@@ -10,6 +10,8 @@ pages:
       - 'Parquet' : bigdata/parquet.md
     - Docker:
        - 'Cloudera Quickstart' : docker/cloudera.md     
+       - 'Jupyter Notebooks' : docker/jupyter.md
+       - 'Kubernetes' : docker/kind.md
        - 'SQL Server' : docker/sqlserver.md
     - ElasticSearch:
        - 'Geographical' : elasticsearch/geohashing.md

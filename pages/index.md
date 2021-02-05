@@ -6,7 +6,7 @@ Feel free to clone them [here](https://github.com/victor-ferrer/code_notes).
 
 ### About the autor
 
-Victor Ferrer is a Software Engineer, currently working at Ericsson.
+Victor Ferrer is a Software Engineer.
 
 ### Contact
 
