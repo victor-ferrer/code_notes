@@ -61,7 +61,7 @@
                     
     <a class="" href="../../bash/">Bash</a>
                 </li>
-                <li class="">
+                <li class=" current">
                     
     <span class="caption-text">Big Data</span>
     <ul class="subnav">
@@ -72,6 +72,41 @@
                 <li class="toctree-l3">
                     
     <a class="" href="../../bigdata/parquet/">Parquet</a>
+                </li>
+                <li class="toctree-l3 current">
+                    
+    <span class="caption-text">Spark</span>
+    <ul class="subnav">
+                <li class="toctree-l4 current">
+                    
+    <a class="current" href="./">DataFrames</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l5"><a href="#read-and-write-fromto-csv">Read and write from/to CSV</a></li>
+    
+
+    <li class="toctree-l5"><a href="#writing-a-json-dataframe-to-kafka">Writing a JSON DataFrame to Kafka</a></li>
+    
+
+    <li class="toctree-l5"><a href="#spark-streaming-setup">Spark Streaming setup</a></li>
+    
+
+    <li class="toctree-l5"><a href="#write-a-compressed-dataframe">Write a compressed DataFrame</a></li>
+    
+
+    <li class="toctree-l5"><a href="#add-dynamic-partitions-to-a-dataframe">Add dynamic partitions to a DataFrame</a></li>
+    
+
+    <li class="toctree-l5"><a href="#compare-two-rows-within-two-dataframestwo-parquet-files">Compare two rows within two Dataframes/two Parquet Files</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="../structured_streaming/">Structured Streaming</a>
+                </li>
+    </ul>
                 </li>
     </ul>
                 </li>
@@ -114,6 +149,16 @@
                 <li class="toctree-l3">
                     
     <a class="" href="../../git/ssh-clone/">SSH Usage</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Go</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="../../go/go_docker/">Basic Docker image</a>
                 </li>
     </ul>
                 </li>
@@ -221,41 +266,6 @@
                 </li>
     </ul>
                 </li>
-                <li class=" current">
-                    
-    <span class="caption-text">Spark</span>
-    <ul class="subnav">
-                <li class="toctree-l3 current">
-                    
-    <a class="current" href="./">DataFrames</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l4"><a href="#read-and-write-fromto-csv">Read and write from/to CSV</a></li>
-    
-
-    <li class="toctree-l4"><a href="#writing-a-json-dataframe-to-kafka">Writing a JSON DataFrame to Kafka</a></li>
-    
-
-    <li class="toctree-l4"><a href="#spark-streaming-setup">Spark Streaming setup</a></li>
-    
-
-    <li class="toctree-l4"><a href="#write-a-compressed-dataframe">Write a compressed DataFrame</a></li>
-    
-
-    <li class="toctree-l4"><a href="#add-dynamic-partitions-to-a-dataframe">Add dynamic partitions to a DataFrame</a></li>
-    
-
-    <li class="toctree-l4"><a href="#compare-two-rows-within-two-dataframestwo-parquet-files">Compare two rows within two Dataframes/two Parquet Files</a></li>
-    
-
-    </ul>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="../structured_streaming/">Structured Streaming</a>
-                </li>
-    </ul>
-                </li>
     </ul>
 	    </li>
           
@@ -282,6 +292,10 @@
       
         
           <li>Spark &raquo;</li>
+        
+      
+        
+          <li>Big Data &raquo;</li>
         
       
         
@@ -442,7 +456,7 @@ df.coalesce(1).write.format(&quot;com.databricks.spark.csv&quot;)
         <a href="../structured_streaming/" class="btn btn-neutral float-right" title="Structured Streaming">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../../spring/spring_io_sessions/" class="btn btn-neutral" title="Spring IO 2018"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../bigdata/parquet/" class="btn btn-neutral" title="Parquet"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -468,7 +482,7 @@ df.coalesce(1).write.format(&quot;com.databricks.spark.csv&quot;)
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../../spring/spring_io_sessions/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../../bigdata/parquet/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../structured_streaming/" style="color: #fcfcfc">Next &raquo;</a></span>

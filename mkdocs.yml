@@ -8,6 +8,9 @@ pages:
     - Big Data:
       - 'Hive': bigdata/hive.md
       - 'Parquet' : bigdata/parquet.md
+      - Spark: 
+         - 'DataFrames' : spark/spark.md
+         - 'Structured Streaming' : spark/structured_streaming.md      
     - Docker:
        - 'Cloudera Quickstart' : docker/cloudera.md     
        - 'Jupyter Notebooks' : docker/jupyter.md
@@ -17,6 +20,8 @@ pages:
        - 'Geographical' : elasticsearch/geohashing.md
     - Git:
        - 'SSH Usage' : git/ssh-clone.md
+    - Go:
+       - 'Basic Docker image' : go/go_docker.md
     - Java: 
        - 'Cryptography' : java/crypto.md
        - 'JVM' : java/jvm.md
@@ -40,8 +45,6 @@ pages:
            - 'Basic Setup' : spring/security_basic.md
            - 'Method Security' : spring/security_method.md
        -  'Spring IO 2018': spring/spring_io_sessions.md
-    - Spark: 
-       - 'DataFrames' : spark/spark.md
-       - 'Structured Streaming' : spark/structured_streaming.md
+
 
 theme: readthedocs

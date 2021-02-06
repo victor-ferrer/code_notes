@@ -57,6 +57,8 @@
     
         <ul>
         
+            <li><a class="toctree-l3" href="#how-to-generate-new-content">How to generate new content</a></li>
+        
             <li><a class="toctree-l3" href="#about-the-autor">About the autor</a></li>
         
             <li><a class="toctree-l3" href="#contact">Contact</a></li>
@@ -86,6 +88,20 @@
                 <li class="toctree-l3">
                     
     <a class="" href="bigdata/parquet/">Parquet</a>
+                </li>
+                <li class="toctree-l3">
+                    
+    <span class="caption-text">Spark</span>
+    <ul class="subnav">
+                <li class="toctree-l4">
+                    
+    <a class="" href="spark/spark/">DataFrames</a>
+                </li>
+                <li class="toctree-l4">
+                    
+    <a class="" href="spark/structured_streaming/">Structured Streaming</a>
+                </li>
+    </ul>
                 </li>
     </ul>
                 </li>
@@ -128,6 +144,16 @@
                 <li class="toctree-l3">
                     
     <a class="" href="git/ssh-clone/">SSH Usage</a>
+                </li>
+    </ul>
+                </li>
+                <li class="">
+                    
+    <span class="caption-text">Go</span>
+    <ul class="subnav">
+                <li class="toctree-l3">
+                    
+    <a class="" href="go/go_docker/">Basic Docker image</a>
                 </li>
     </ul>
                 </li>
@@ -235,20 +261,6 @@
                 </li>
     </ul>
                 </li>
-                <li class="">
-                    
-    <span class="caption-text">Spark</span>
-    <ul class="subnav">
-                <li class="toctree-l3">
-                    
-    <a class="" href="spark/spark/">DataFrames</a>
-                </li>
-                <li class="toctree-l3">
-                    
-    <a class="" href="spark/structured_streaming/">Structured Streaming</a>
-                </li>
-    </ul>
-                </li>
     </ul>
 	    </li>
           
@@ -286,7 +298,15 @@
               
                 <h1 id="welcome-to-victors-code-notes">Welcome to Victor's Code Notes</h1>
 <p>This is a small collection of code notes that I'm gathering after finally ditching OneNote.</p>
-<p>Feel free to clone them <a href="https://github.com/victor-ferrer/code_notes">here</a>.</p>
+<p>Feel free to clone them <a href="https://github.com/victor-ferrer/code_notes">here</a></p>
+<p>Access them using this URL: https://victor-ferrer.github.io/code_notes/</p>
+<h3 id="how-to-generate-new-content">How to generate new content</h3>
+<p>This repository uses <a href="https://www.mkdocs.org/">MKDocs</a> for generating an HTML website from the markdown files.</p>
+<ul>
+<li>Write new pages and link them in <code>mkdocks.yml</code></li>
+<li>Execute <code>mkdocs build</code> and commit the binaries produced to the master branch</li>
+<li>Set up a <code>github-pages</code> environment that watches for changes and deploys the new content.</li>
+</ul>
 <h3 id="about-the-autor">About the autor</h3>
 <p>Victor Ferrer is a Software Engineer.</p>
 <h3 id="contact">Contact</h3>
@@ -343,5 +363,5 @@
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2021-02-05 07:55:34
+Build Date UTC : 2021-02-06 19:33:21
 -->

@@ -6,9 +6,18 @@ Feel free to clone them [here](https://github.com/victor-ferrer/code_notes)
 
 Access them using this URL: https://victor-ferrer.github.io/code_notes/
 
+### How to generate new content
+
+This repository uses [MKDocs](https://www.mkdocs.org/) for generating an HTML website from the markdown files.
+
+ - Write new pages and link them in `mkdocks.yml`
+ - Execute `mkdocs build` and commit the binaries produced to the master branch
+ - Set up a `github-pages` environment that watches for changes and deploys the new content.
+
+
 ### About the autor
 
-Victor Ferrer is a Software Engineer, currently working at Ericsson.
+Victor Ferrer is a Software Engineer.
 
 ### Contact
 
